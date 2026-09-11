@@ -29,7 +29,7 @@ These names describe model functions. They do not identify measured cell populat
 
 ## Laboratory visual encoding
 
-The shared live controller uses contrast from real browser screenshots, as specified in the shared-controller methods. The encoder below applies to the separate controlled laboratory. Both input adapters feed the same eight-state population equations.
+The shared live controller uses contrast from real browser screenshots, as specified in the shared-controller methods. The encoder below applies to the separate controlled laboratory and the homepage's browser-local target test. Both input adapters feed the same eight-state population equations; the target-test methods specify its trial settings and scoring separately.
 
 The 32 × 16 retinal image is generated analytically from target bearing, distance, and size using a Gaussian contrast profile. It is not a screenshot of the rendered arena. Changes in fish pose affect the next observation.
 

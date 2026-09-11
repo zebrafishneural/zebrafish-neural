@@ -31,4 +31,14 @@ A persistent tunnel hostname or a separately hosted runtime would remove the URL
 
 Vercel publishes `dist/` and uses `vercel.json`. Runtime state, local environment files, and browser profiles are not served by the frontend. The browser starts with a fresh context and receives only permitted Wikipedia article pages. It does not capture the desktop, personal tabs, or files. The public feed is read-only.
 
+## Browser-local target test
+
+The homepage defaults to Wikipedia. Target test, also reachable at `/#target-test`, runs independently in each visitor's browser using synthetic retinal input and the unchanged eight-state model. It does not require a second server, send viewer actions to the shared host, or capture any desktop. The existing website layout and brain visualization are retained.
+
+The local target model pauses when its tab is hidden or Wikipedia mode is selected. The shared Wikipedia process continues; switching modes does not stop it. The JSON export follows the selected mode: the current local target session or the shared recent-run recording. Target trial records, including failures and interventions, are memory-only and are lost on reset, reload or closing the page. They are not part of runtime checkpoints or host logs.
+
+Verify mode switching, the direct target URL, trial completion, input interruption and both exports after a frontend release. The target adapter is `target-task-0.1.0`; the population model remains `zebra-rate-0.1.0`. See [target methods](docs/target-test.md). This feature does not migrate the host or change the shared feed's approximately 2 Hz screenshot rate.
+
+## Token scope
+
 The project operator launched ZNEURO manually on Pons. The [launch record](docs/genesis.md) contains the contract address and confirmed Robinhood Chain creation transaction. The Wikipedia controller continues its existing experiment independently; it did not perform the launch. Its runtime has no Pons integration, wallet access, transaction signing, or token-creation action.

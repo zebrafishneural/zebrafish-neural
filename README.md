@@ -2,7 +2,7 @@
 
 **A zebrafish-inspired neural controller operating a real browser.**
 
-One shared model receives Chromium screenshots, extracts visual contrast, and turns eight evolving population states into cursor movement, permitted link clicks, and scrolling. Spectators see the same browser, neural state, retinal input, and event log. A separate laboratory provides controlled synthetic experiments and measured anatomy inspection.
+One shared model receives Chromium screenshots, extracts visual contrast, and turns eight evolving population states into cursor movement, permitted link clicks, and scrolling. Spectators see the same browser, neural state, retinal input, and event log. The homepage also offers a browser-local target test with synthetic visual input, scored trials and JSON export. Each visitor runs an independent target session using the same model equations. A separate laboratory provides additional controlled experiments and measured anatomy inspection.
 
 **Project token:** $ZNEURO was launched manually by the operator on [Pons](https://www.ponsfamily.com/launchpad/0xd563F5010291a270fC83092111571b5f9Df104B4). The [creation transaction](https://robinhoodchain.blockscout.com/tx/0xb88b19f765312360518944770acc8bb753474323a2259fbf9c0b09556f00c5fa) is confirmed on Robinhood Chain (chain ID 4663). The neural controller did not perform the launch; its Wikipedia browser experiment continues independently.
 
@@ -24,6 +24,7 @@ One shared model receives Chromium screenshots, extracts visual contrast, and tu
 | Live view | Read-only WebSocket feed, shared run ID and state |
 | Recovery | Stale-input suspension, browser retry, periodic checkpoints |
 | Recording | Recent 60 model seconds, recent events and bounded host event files |
+| Target test | Per-viewer synthetic target reaching, reversal and input occlusion; scored attempts and session JSON |
 | Laboratory | Synthetic stimuli, virtual swimming, exports and separate anatomy viewer |
 | Anatomy | 71,721 measured ZAPBench cell centroids, independent of model dynamics |
 
@@ -50,7 +51,9 @@ npm run dev
 
 For local-only use, set `dist/live-config.json` to `{"endpoint":"http://127.0.0.1:4388"}`. An HTTPS frontend needs an HTTPS runtime endpoint. The operator-computer setup uses a temporary HTTPS tunnel; restarting the tunnel may require updating its configured address.
 
-The runtime opens a fresh browser context. It does not capture your desktop or use personal tabs, files, accounts, or a wallet. Viewers cannot start, stop, or command the model. The host must remain awake and online. Closing the website does not stop the shared process.
+The runtime opens a fresh browser context. It does not capture your desktop or use personal tabs, files, accounts, or a wallet. Viewers cannot start, stop, or command the shared model. The host must remain awake and online. Closing the website does not stop the shared process.
+
+The homepage opens Wikipedia by default. Select Target test or open `/#target-test` for the independent local experiment. Target controls affect only that browser's simulation. It pauses when hidden or when Wikipedia is selected, while the shared host continues. Target records stay in memory until exported; reset, reload or closing the page discards them. See the [target-test methods](docs/target-test.md) for protocols, input mapping, scoring and retention.
 
 On Windows, `./runtime/local-host.ps1 -Action Start` starts the supervised model in the background; use `-Action Status` to inspect it and `-Action Stop` to stop it. See [operator notes](OPERATIONS.md) for the public feed and restart procedure.
 
@@ -71,6 +74,7 @@ Tests cover deterministic dynamics, data integrity, continuous sessions, screens
 ```text
 dist/index.html         Shared live view
 dist/live.js            Stream client and reconnect handling
+dist/lib/target-task.js Browser-local target protocols, scoring and export
 dist/live-config.json   Public runtime endpoint
 dist/laboratory.html    Controlled synthetic experiments
 dist/app.js             Laboratory controls and recording
@@ -91,6 +95,7 @@ The frontend deploys to Vercel from `dist/`. The continuous browser process runs
 ## Methods and evidence
 
 - [Shared browser input, actions and runtime](docs/runtime.md)
+- [Browser-local target-test methods and records](docs/target-test.md)
 - [Token launch record and experimental scope](docs/genesis.md)
 - [Model equations and validation](docs/model.md)
 - [Data provenance](docs/data.md)
