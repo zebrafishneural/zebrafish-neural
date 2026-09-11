@@ -44,4 +44,3 @@ test('local API isolates state, rejects cross-origin mutation, persists and rest
     if(dirname(resolve(directory))===resolve(tmpdir())&&basename(directory).startsWith('zebra-learning-test-'))await rm(directory,{recursive:true,force:true});
   }
 });
-

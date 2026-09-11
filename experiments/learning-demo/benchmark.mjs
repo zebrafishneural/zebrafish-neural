@@ -21,4 +21,3 @@ for(const seed of seeds){
 }
 const report={createdAt:new Date().toISOString(),scope:'Exploratory software benchmark. Five predeclared seeds; 32 held-out tasks per run; not biological validation or a statistical claim of superiority.',versions:{model:MODEL_VERSION,task:TASK_VERSION,reward:REWARD_VERSION,trainer:TRAINER_VERSION},seeds,settings,parameters:PARAMS,baseline:BASE_WEIGHTS,runs};
 await writeFile(new URL('./initial-evaluation.json',resultDir),JSON.stringify(report,null,2));
-
