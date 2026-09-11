@@ -31,4 +31,4 @@ A persistent tunnel hostname or a separately hosted runtime would remove the URL
 
 Vercel publishes `dist/` and uses `vercel.json`. Runtime state, local environment files, and browser profiles are not served by the frontend. The browser starts with a fresh context and receives only permitted Wikipedia article pages. It does not capture the desktop, personal tabs, or files. The public feed is read-only.
 
-Pons integration and transaction signing are pending. The current article browser has no wallet or token-creation action.
+The project operator launched ZNEURO manually on Pons. The [launch record](docs/genesis.md) contains the contract address and confirmed Robinhood Chain creation transaction. The Wikipedia controller continues its existing experiment independently; it did not perform the launch. Its runtime has no Pons integration, wallet access, transaction signing, or token-creation action.

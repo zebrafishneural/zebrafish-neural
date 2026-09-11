@@ -34,7 +34,7 @@ The runtime saves population rates, body position, model time, step count, and c
 
 ## Recording and connection
 
-The download contains the latest 60 model seconds and recent events, with original model timestamps and frame references. Event files and a checkpoint are kept on the host. This is a recent-run export, not a complete historical screenshot archive or a Genesis launch record.
+The download contains the latest 60 model seconds and recent events, with original model timestamps and frame references. Event files and a checkpoint are kept on the host. This is a recent-run export rather than a complete historical screenshot archive. The operator's manual token launch is documented separately in the [token launch record](genesis.md).
 
 The current operator-computer deployment uses a temporary HTTPS tunnel for the read-only feed. The model continues without viewers while the host and tunnel are running. Restarting the tunnel may change its address; the website's live-feed configuration must then be updated. A stable always-on deployment requires a persistent server and hostname.
 
@@ -44,4 +44,4 @@ The separate **Laboratory** page retains controlled synthetic-stimulus experimen
 
 Shared browser capture, contrast encoding, neural cursor movement, permitted link clicks, streaming, event logs, and checkpoint resume are implemented. The controller is an eight-state zebrafish-inspired model; it is not a reconstructed whole brain. ZAPBench anatomy remains a separate measured reference.
 
-Pons screen integration, token form execution, signing, and the $ZNEURO launch remain pending. The roaming browser cannot create or trade tokens.
+$ZNEURO was launched manually by the project operator on Pons; its creation transaction is confirmed on Robinhood Chain. The shared Wikipedia experiment continues independently. Pons screen input, token-form execution, wallet access, and transaction signing are not connected to this runtime. The controller did not create the token and cannot create or trade tokens through the current article browser.

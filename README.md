@@ -4,7 +4,9 @@
 
 One shared model receives Chromium screenshots, extracts visual contrast, and turns eight evolving population states into cursor movement, permitted link clicks, and scrolling. Spectators see the same browser, neural state, retinal input, and event log. A separate laboratory provides controlled synthetic experiments and measured anatomy inspection.
 
-Genesis is the proposed experiment to launch $ZNEURO through the controller on Pons, with a record from visual input to a confirmed transaction. **Pre-launch: Pons integration and signing are not connected. No token contract has been issued.**
+**Project token:** $ZNEURO was launched manually by the operator on [Pons](https://www.ponsfamily.com/launchpad/0xd563F5010291a270fC83092111571b5f9Df104B4). The [creation transaction](https://robinhoodchain.blockscout.com/tx/0xb88b19f765312360518944770acc8bb753474323a2259fbf9c0b09556f00c5fa) is confirmed on Robinhood Chain (chain ID 4663). The neural controller did not perform the launch; its Wikipedia browser experiment continues independently.
+
+**Contract:** [0xd563F5010291a270fC83092111571b5f9Df104B4](https://robinhoodchain.blockscout.com/token/0xd563F5010291a270fC83092111571b5f9Df104B4). The token is named Zebrafish Neural, has symbol ZNEURO and 18 decimals. Contract source code is not explorer-verified; no contract audit is claimed. See the [launch record and experimental scope](docs/genesis.md).
 
 - Website: [zebraneural.com](https://zebraneural.com)
 - Updates: [@zebrafishneural](https://x.com/zebrafishneural)
@@ -89,7 +91,7 @@ The frontend deploys to Vercel from `dist/`. The continuous browser process runs
 ## Methods and evidence
 
 - [Shared browser input, actions and runtime](docs/runtime.md)
-- [Genesis and pending launch mechanism](docs/genesis.md)
+- [Token launch record and experimental scope](docs/genesis.md)
 - [Model equations and validation](docs/model.md)
 - [Data provenance](docs/data.md)
 - [Development roadmap](docs/roadmap.md)
