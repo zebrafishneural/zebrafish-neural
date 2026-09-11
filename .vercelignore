@@ -7,3 +7,5 @@ runtime/logs
 .env
 .env.*
 *.log
+experiments/learning-live/data
+experiments/learning-demo/data

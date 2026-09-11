@@ -1,0 +1,15 @@
+name: Persistent learning
+on:
+  push:
+    paths: ['experiments/learning-live/**', 'experiments/learning-demo/core.js', 'dist/lib/model.js', 'api/learning.js', '.github/workflows/learning-live.yml']
+  pull_request:
+    paths: ['experiments/learning-live/**', 'experiments/learning-demo/core.js', 'dist/lib/model.js', 'api/learning.js', '.github/workflows/learning-live.yml']
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test experiments/learning-live/*.test.mjs

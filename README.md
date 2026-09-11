@@ -14,6 +14,8 @@ One shared model receives Chromium screenshots, extracts visual contrast, and tu
 - Updates: [@zebrafishneural](https://x.com/zebrafishneural)
 - Source: [zebrafishneural/zebrafish-neural](https://github.com/zebrafishneural/zebrafish-neural)
 
+**Persistent target learning:** A separate learning controller adjusts and retains six connection gains, with server-side training, checkpoint persistence and fresh-target evaluations. Start the local observer at http://127.0.0.1:4189/ using the command in its README; public hosting is not enabled in this branch. The shared Wikipedia controller still uses fixed parameters. See [methods and records](experiments/learning-live/README.md).
+
 ## Current implementation
 
 | Component | Implementation |
