@@ -1,0 +1,420 @@
+{
+  "createdAt": "2026-09-11T17:34:38.799Z",
+  "scope": "Exploratory software benchmark. Five predeclared seeds; 32 held-out tasks per run; not biological validation or a statistical claim of superiority.",
+  "versions": {
+    "model": "zebra-rate-trainable-0.1.0",
+    "task": "learning-target-0.1.0",
+    "reward": "reach-time-path-0.1.0",
+    "trainer": "bounded-antithetic-es-adam-v1"
+  },
+  "seeds": [
+    20260911,
+    20260912,
+    20260913,
+    20260914,
+    20260915
+  ],
+  "settings": {
+    "generations": 12,
+    "pairs": 4,
+    "trainCount": 6,
+    "validationCount": 6,
+    "testCount": 32,
+    "sigma": 0.08,
+    "learningRate": 0.025
+  },
+  "parameters": [
+    {
+      "id": "visualIntegrator",
+      "label": "Visual → integrator",
+      "base": 0.5,
+      "min": 0.1,
+      "max": 1.5
+    },
+    {
+      "id": "visualDrive",
+      "label": "Visual → shared drive",
+      "base": 0.45,
+      "min": 0.1,
+      "max": 1.35
+    },
+    {
+      "id": "visualMotor",
+      "label": "Visual → motor",
+      "base": 1,
+      "min": 0.25,
+      "max": 2.5
+    },
+    {
+      "id": "integratorMotor",
+      "label": "Integrator → motor",
+      "base": 0.12,
+      "min": 0,
+      "max": 0.5
+    },
+    {
+      "id": "sharedMotor",
+      "label": "Shared drive → motor",
+      "base": 0.08,
+      "min": 0,
+      "max": 0.35
+    },
+    {
+      "id": "motorSpinal",
+      "label": "Motor → spinal drive",
+      "base": 0.55,
+      "min": 0.15,
+      "max": 1.65
+    }
+  ],
+  "baseline": [
+    0.5,
+    0.45,
+    1,
+    0.12,
+    0.08,
+    0.55
+  ],
+  "runs": [
+    {
+      "seed": 20260911,
+      "bestGeneration": 7,
+      "weights": [
+        0.6337896390387726,
+        0.5511135604666358,
+        1.2308167097501799,
+        0.18097583731269334,
+        0.05803879815778563,
+        0.42951549376709897
+      ],
+      "bestWeights": [
+        0.6072444185125319,
+        0.5694375049223416,
+        1.2816273599284471,
+        0.17057867533324536,
+        0.07975299886823148,
+        0.5086624510805191
+      ],
+      "test": {
+        "generation": 12,
+        "baseline": {
+          "episodes": 32,
+          "successes": 32,
+          "successRate": 1,
+          "meanReward": 0.9235276793705008,
+          "meanTimeCost": 11.1225,
+          "meanPathLength": 0.5225221416373156,
+          "meanDuration": 11.1225
+        },
+        "best": {
+          "episodes": 32,
+          "successes": 32,
+          "successRate": 1,
+          "meanReward": 0.9294084839564798,
+          "meanTimeCost": 10.229374999999997,
+          "meanPathLength": 0.5390286097920376,
+          "meanDuration": 10.229374999999997
+        },
+        "current": {
+          "episodes": 32,
+          "successes": 32,
+          "successRate": 1,
+          "meanReward": 0.9219859659036617,
+          "meanTimeCost": 11.355000000000004,
+          "meanPathLength": 0.5206576716761182,
+          "meanDuration": 11.355000000000004
+        }
+      },
+      "noInput": {
+        "episodes": 32,
+        "successes": 0,
+        "successRate": 0,
+        "meanReward": -0.2000000000000001,
+        "meanTimeCost": 30,
+        "meanPathLength": 0,
+        "meanDuration": 30
+      },
+      "counters": {
+        "trainRollouts": 654,
+        "validationRollouts": 78,
+        "testRollouts": 96,
+        "candidateEvaluations": 96,
+        "testEvaluations": 1,
+        "totalEpisodes": 828
+      },
+      "seconds": 7.7699162
+    },
+    {
+      "seed": 20260912,
+      "bestGeneration": 7,
+      "weights": [
+        0.4437354728987317,
+        0.40660741966280556,
+        1.4155421117429168,
+        0.08689641888257518,
+        0.08524170951062082,
+        0.578731575888034
+      ],
+      "bestWeights": [
+        0.4360965736112534,
+        0.3877656398364945,
+        1.3096045725589909,
+        0.11392894181536024,
+        0.07599804415686894,
+        0.6773816503570926
+      ],
+      "test": {
+        "generation": 12,
+        "baseline": {
+          "episodes": 32,
+          "successes": 32,
+          "successRate": 1,
+          "meanReward": 0.9258324257806669,
+          "meanTimeCost": 10.771875000000001,
+          "meanPathLength": 0.5298916993499275,
+          "meanDuration": 10.771875000000001
+        },
+        "best": {
+          "episodes": 32,
+          "successes": 30,
+          "successRate": 0.9375,
+          "meanReward": 0.8694280594601961,
+          "meanTimeCost": 9.848124999999998,
+          "meanPathLength": 0.5439991214558625,
+          "meanDuration": 9.848124999999998
+        },
+        "current": {
+          "episodes": 32,
+          "successes": 28,
+          "successRate": 0.875,
+          "meanReward": 0.7959226354977531,
+          "meanTimeCost": 11.519375,
+          "meanPathLength": 0.5133445130055572,
+          "meanDuration": 11.519375
+        }
+      },
+      "noInput": {
+        "episodes": 32,
+        "successes": 0,
+        "successRate": 0,
+        "meanReward": -0.2000000000000001,
+        "meanTimeCost": 30,
+        "meanPathLength": 0,
+        "meanDuration": 30
+      },
+      "counters": {
+        "trainRollouts": 654,
+        "validationRollouts": 78,
+        "testRollouts": 96,
+        "candidateEvaluations": 96,
+        "testEvaluations": 1,
+        "totalEpisodes": 828
+      },
+      "seconds": 11.604526900000002
+    },
+    {
+      "seed": 20260913,
+      "bestGeneration": 6,
+      "weights": [
+        0.3571400933807308,
+        0.3049031694500831,
+        1.5769057824788522,
+        0.14606740494396844,
+        0.06425700248065197,
+        0.9191253475823097
+      ],
+      "bestWeights": [
+        0.4222210762047265,
+        0.33230117758484046,
+        1.3194722563730756,
+        0.13879171415205938,
+        0.06819961970123237,
+        0.7543209287882846
+      ],
+      "test": {
+        "generation": 12,
+        "baseline": {
+          "episodes": 32,
+          "successes": 32,
+          "successRate": 1,
+          "meanReward": 0.9271191988218866,
+          "meanTimeCost": 10.596875,
+          "meanPathLength": 0.5028677650755018,
+          "meanDuration": 10.596875
+        },
+        "best": {
+          "episodes": 32,
+          "successes": 31,
+          "successRate": 0.96875,
+          "meanReward": 0.9054180371469732,
+          "meanTimeCost": 9.146874999999998,
+          "meanPathLength": 0.5293791419310536,
+          "meanDuration": 9.146874999999998
+        },
+        "current": {
+          "episodes": 32,
+          "successes": 28,
+          "successRate": 0.875,
+          "meanReward": 0.8003098226796802,
+          "meanTimeCost": 10.850624999999997,
+          "meanPathLength": 0.5293523970719529,
+          "meanDuration": 10.850624999999997
+        }
+      },
+      "noInput": {
+        "episodes": 32,
+        "successes": 0,
+        "successRate": 0,
+        "meanReward": -0.2000000000000001,
+        "meanTimeCost": 30,
+        "meanPathLength": 0,
+        "meanDuration": 30
+      },
+      "counters": {
+        "trainRollouts": 654,
+        "validationRollouts": 78,
+        "testRollouts": 96,
+        "candidateEvaluations": 96,
+        "testEvaluations": 1,
+        "totalEpisodes": 828
+      },
+      "seconds": 10.443063000000002
+    },
+    {
+      "seed": 20260914,
+      "bestGeneration": 2,
+      "weights": [
+        0.666298138718846,
+        0.37228159366760205,
+        1.1927768300859674,
+        0.10243972645007793,
+        0.02128472298081491,
+        0.5604106364773365
+      ],
+      "bestWeights": [
+        0.5208988278399156,
+        0.5005725551720623,
+        1.1025678777704226,
+        0.09508939728162558,
+        0.0624883070647537,
+        0.6091581749082808
+      ],
+      "test": {
+        "generation": 12,
+        "baseline": {
+          "episodes": 32,
+          "successes": 31,
+          "successRate": 0.96875,
+          "meanReward": 0.8797266015483005,
+          "meanTimeCost": 13.001250000000002,
+          "meanPathLength": 0.5283896516324045,
+          "meanDuration": 13.001250000000002
+        },
+        "best": {
+          "episodes": 32,
+          "successes": 30,
+          "successRate": 0.9375,
+          "meanReward": 0.8543581414622583,
+          "meanTimeCost": 12.123750000000003,
+          "meanPathLength": 0.5212931709918676,
+          "meanDuration": 12.123750000000003
+        },
+        "current": {
+          "episodes": 32,
+          "successes": 30,
+          "successRate": 0.9375,
+          "meanReward": 0.8526303053228599,
+          "meanTimeCost": 12.384374999999999,
+          "meanPathLength": 0.5191188023565712,
+          "meanDuration": 12.384374999999999
+        }
+      },
+      "noInput": {
+        "episodes": 32,
+        "successes": 0,
+        "successRate": 0,
+        "meanReward": -0.2000000000000001,
+        "meanTimeCost": 30,
+        "meanPathLength": 0,
+        "meanDuration": 30
+      },
+      "counters": {
+        "trainRollouts": 654,
+        "validationRollouts": 78,
+        "testRollouts": 96,
+        "candidateEvaluations": 96,
+        "testEvaluations": 1,
+        "totalEpisodes": 828
+      },
+      "seconds": 11.795737099999998
+    },
+    {
+      "seed": 20260915,
+      "bestGeneration": 12,
+      "weights": [
+        0.6092570441797623,
+        0.5483001538816433,
+        0.9145473850237591,
+        0.1507428736533324,
+        0.09893594858059898,
+        0.576450405719354
+      ],
+      "bestWeights": [
+        0.6092570441797623,
+        0.5483001538816433,
+        0.9145473850237591,
+        0.1507428736533324,
+        0.09893594858059898,
+        0.576450405719354
+      ],
+      "test": {
+        "generation": 12,
+        "baseline": {
+          "episodes": 32,
+          "successes": 30,
+          "successRate": 0.9375,
+          "meanReward": 0.8516156335837437,
+          "meanTimeCost": 12.533124999999998,
+          "meanPathLength": 0.5242949436576576,
+          "meanDuration": 12.533124999999998
+        },
+        "best": {
+          "episodes": 32,
+          "successes": 30,
+          "successRate": 0.9375,
+          "meanReward": 0.8493877197762887,
+          "meanTimeCost": 12.861875000000001,
+          "meanPathLength": 0.5324505503350532,
+          "meanDuration": 12.861875000000001
+        },
+        "current": {
+          "episodes": 32,
+          "successes": 30,
+          "successRate": 0.9375,
+          "meanReward": 0.8493877197762887,
+          "meanTimeCost": 12.861875000000001,
+          "meanPathLength": 0.5324505503350532,
+          "meanDuration": 12.861875000000001
+        }
+      },
+      "noInput": {
+        "episodes": 32,
+        "successes": 0,
+        "successRate": 0,
+        "meanReward": -0.2000000000000001,
+        "meanTimeCost": 30,
+        "meanPathLength": 0,
+        "meanDuration": 30
+      },
+      "counters": {
+        "trainRollouts": 654,
+        "validationRollouts": 78,
+        "testRollouts": 96,
+        "candidateEvaluations": 96,
+        "testEvaluations": 1,
+        "totalEpisodes": 828
+      },
+      "seconds": 12.493044900000001
+    }
+  ]
+}

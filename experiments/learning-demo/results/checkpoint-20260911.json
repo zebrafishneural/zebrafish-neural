@@ -1,0 +1,538 @@
+{
+  "kind": "zebrafish-learning-checkpoint",
+  "version": 1,
+  "trainerVersion": "bounded-antithetic-es-adam-v1",
+  "modelVersion": "zebra-rate-trainable-0.1.0",
+  "taskVersion": "learning-target-0.1.0",
+  "rewardVersion": "reach-time-path-0.1.0",
+  "config": {
+    "seed": 20260911,
+    "generations": 12,
+    "pairs": 4,
+    "trainCount": 6,
+    "validationCount": 6,
+    "testCount": 32,
+    "sigma": 0.08,
+    "learningRate": 0.025
+  },
+  "generation": 12,
+  "weights": [
+    0.6337896390387726,
+    0.5511135604666358,
+    1.2308167097501799,
+    0.18097583731269334,
+    0.05803879815778563,
+    0.42951549376709897
+  ],
+  "bestWeights": [
+    0.6072444185125319,
+    0.5694375049223416,
+    1.2816273599284471,
+    0.17057867533324536,
+    0.07975299886823148,
+    0.5086624510805191
+  ],
+  "bestGeneration": 7,
+  "bestValidation": {
+    "episodes": 6,
+    "successes": 5,
+    "successRate": 0.8333333333333334,
+    "meanReward": 0.7419932576498045,
+    "meanTimeCost": 13.36,
+    "meanPathLength": 0.5115170287939917,
+    "meanDuration": 13.36
+  },
+  "baselineTrain": {
+    "episodes": 6,
+    "successes": 6,
+    "successRate": 1,
+    "meanReward": 0.9232683747011318,
+    "meanTimeCost": 11.159999999999998,
+    "meanPathLength": 0.5246156922453425,
+    "meanDuration": 11.159999999999998
+  },
+  "baselineValidation": {
+    "episodes": 6,
+    "successes": 5,
+    "successRate": 0.8333333333333334,
+    "meanReward": 0.7344243310881796,
+    "meanTimeCost": 14.506666666666666,
+    "meanPathLength": 0.4945255051595838,
+    "meanDuration": 14.506666666666666
+  },
+  "lastTrain": {
+    "episodes": 6,
+    "successes": 6,
+    "successRate": 1,
+    "meanReward": 0.9251939245242236,
+    "meanTimeCost": 10.88,
+    "meanPathLength": 0.5113669820497069,
+    "meanDuration": 10.88
+  },
+  "lastValidation": {
+    "episodes": 6,
+    "successes": 5,
+    "successRate": 0.8333333333333334,
+    "meanReward": 0.7330767105260995,
+    "meanTimeCost": 14.709999999999999,
+    "meanPathLength": 0.49274013162763275,
+    "meanDuration": 14.709999999999999
+  },
+  "history": [
+    {
+      "generation": 1,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9250432598174113,
+        "meanTimeCost": 10.896666666666667,
+        "meanPathLength": 0.52026654108241,
+        "meanDuration": 10.896666666666667
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7344470935682593,
+        "meanTimeCost": 14.503333333333336,
+        "meanPathLength": 0.4944039471416411,
+        "meanDuration": 14.503333333333336
+      },
+      "bestValidationScore": 0.7344470935682593,
+      "improved": true,
+      "weights": [
+        0.5349999990719705,
+        0.48124999803987834,
+        1.0562499517045032,
+        0.1324999994632135,
+        0.08874999964617701,
+        0.5125000017032417
+      ],
+      "candidateMeanReward": 0.8961952592794742,
+      "gradientNorm": 0.5758889948269961
+    },
+    {
+      "generation": 2,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9259274455171984,
+        "meanTimeCost": 10.763333333333334,
+        "meanPathLength": 0.5213247586303681,
+        "meanDuration": 10.763333333333334
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7350827215620767,
+        "meanTimeCost": 14.406666666666666,
+        "meanPathLength": 0.49638764853276446,
+        "meanDuration": 14.406666666666666
+      },
+      "bestValidationScore": 0.7350827215620767,
+      "improved": true,
+      "weights": [
+        0.556616159719578,
+        0.4929541995120378,
+        1.1007054369802582,
+        0.1413233511431373,
+        0.0942799995913309,
+        0.4952156046177847
+      ],
+      "candidateMeanReward": 0.9213124392821297,
+      "gradientNorm": 0.18377453170502975
+    },
+    {
+      "generation": 3,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9270101303913211,
+        "meanTimeCost": 10.6,
+        "meanPathLength": 0.5227206619527484,
+        "meanDuration": 10.6
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7362111297153123,
+        "meanTimeCost": 14.236666666666666,
+        "meanPathLength": 0.49749581405472965,
+        "meanDuration": 14.236666666666666
+      },
+      "bestValidationScore": 0.7362111297153123,
+      "improved": true,
+      "weights": [
+        0.576169888784135,
+        0.4993221608418196,
+        1.1411466735104192,
+        0.14412341918387223,
+        0.09824601110749376,
+        0.4882669899308827
+      ],
+      "candidateMeanReward": 0.9192352076087382,
+      "gradientNorm": 0.13964678438593678
+    },
+    {
+      "generation": 4,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9275891183837217,
+        "meanTimeCost": 10.506666666666666,
+        "meanPathLength": 0.5324483636626336,
+        "meanDuration": 10.506666666666666
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7390763917654826,
+        "meanTimeCost": 13.803333333333335,
+        "meanPathLength": 0.5028118527664159,
+        "meanDuration": 13.803333333333335
+      },
+      "bestValidationScore": 0.7390763917654826,
+      "improved": true,
+      "weights": [
+        0.5740765198877271,
+        0.5125596922012453,
+        1.182827937073049,
+        0.1509549002804921,
+        0.09472629379329231,
+        0.5062886103517852
+      ],
+      "candidateMeanReward": 0.8731347356221544,
+      "gradientNorm": 1.0727492687514797
+    },
+    {
+      "generation": 5,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9270330051121366,
+        "meanTimeCost": 10.586666666666666,
+        "meanPathLength": 0.5375738497692742,
+        "meanDuration": 10.586666666666666
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7404574400698777,
+        "meanTimeCost": 13.593333333333334,
+        "meanPathLength": 0.5070759842775142,
+        "meanDuration": 13.593333333333334
+      },
+      "bestValidationScore": 0.7404574400698777,
+      "improved": true,
+      "weights": [
+        0.5793232115323599,
+        0.5295172169352371,
+        1.2274815489236897,
+        0.1598847137683933,
+        0.0899683998229751,
+        0.5080443528770114
+      ],
+      "candidateMeanReward": 0.9009273990780775,
+      "gradientNorm": 0.7272376164809919
+    },
+    {
+      "generation": 6,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9264167706717991,
+        "meanTimeCost": 10.676666666666668,
+        "meanPathLength": 0.541226598845196,
+        "meanDuration": 10.676666666666668
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.741293947097172,
+        "meanTimeCost": 13.466666666666669,
+        "meanPathLength": 0.5088619031362828,
+        "meanDuration": 13.466666666666669
+      },
+      "bestValidationScore": 0.741293947097172,
+      "improved": true,
+      "weights": [
+        0.5938764733274613,
+        0.5503476525247605,
+        1.256265205313071,
+        0.1658912198348881,
+        0.08462179520148887,
+        0.5080755793203421
+      ],
+      "candidateMeanReward": 0.9021403574011417,
+      "gradientNorm": 0.7134313359819867
+    },
+    {
+      "generation": 7,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.924915306236433,
+        "meanTimeCost": 10.9,
+        "meanPathLength": 0.5440560968025668,
+        "meanDuration": 10.9
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7419932576498045,
+        "meanTimeCost": 13.36,
+        "meanPathLength": 0.5115170287939917,
+        "meanDuration": 13.36
+      },
+      "bestValidationScore": 0.7419932576498045,
+      "improved": true,
+      "weights": [
+        0.6072444185125319,
+        0.5694375049223416,
+        1.2816273599284471,
+        0.17057867533324536,
+        0.07975299886823148,
+        0.5086624510805191
+      ],
+      "candidateMeanReward": 0.9258068170705953,
+      "gradientNorm": 0.07601409811291732
+    },
+    {
+      "generation": 8,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9296403265888822,
+        "meanTimeCost": 10.196666666666667,
+        "meanPathLength": 0.5359265175015089,
+        "meanDuration": 10.196666666666667
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.740660600757574,
+        "meanTimeCost": 13.563333333333333,
+        "meanPathLength": 0.5063648295458442,
+        "meanDuration": 13.563333333333333
+      },
+      "bestValidationScore": 0.7419932576498045,
+      "improved": false,
+      "weights": [
+        0.6103306423700378,
+        0.5654791462916672,
+        1.2734336833038686,
+        0.17465358057005853,
+        0.07417478700882563,
+        0.49424394416841
+      ],
+      "candidateMeanReward": 0.8260677995375485,
+      "gradientNorm": 1.527977633082684
+    },
+    {
+      "generation": 9,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9298903036147497,
+        "meanTimeCost": 10.163333333333334,
+        "meanPathLength": 0.5296816866813253,
+        "meanDuration": 10.163333333333334
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7394058557386881,
+        "meanTimeCost": 13.753333333333336,
+        "meanPathLength": 0.5036824587951608,
+        "meanDuration": 13.753333333333336
+      },
+      "bestValidationScore": 0.7419932576498045,
+      "improved": false,
+      "weights": [
+        0.6141349395524782,
+        0.5619315790404467,
+        1.2658210491345783,
+        0.17796365188436325,
+        0.06909744699914488,
+        0.4815812211326276
+      ],
+      "candidateMeanReward": 0.9235509275702988,
+      "gradientNorm": 0.0630507518427675
+    },
+    {
+      "generation": 10,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.928871167845965,
+        "meanTimeCost": 10.32,
+        "meanPathLength": 0.5239872346578829,
+        "meanDuration": 10.32
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7377143950980748,
+        "meanTimeCost": 14.01,
+        "meanPathLength": 0.49926110293316645,
+        "meanDuration": 14.01
+      },
+      "bestValidationScore": 0.7419932576498045,
+      "improved": false,
+      "weights": [
+        0.6189962626803861,
+        0.5590288537266838,
+        1.2592113949277386,
+        0.18096351244959114,
+        0.06460292405264473,
+        0.4653348331335537
+      ],
+      "candidateMeanReward": 0.9025620960779458,
+      "gradientNorm": 0.38840328766657256
+    },
+    {
+      "generation": 11,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9270531968109706,
+        "meanTimeCost": 10.59666666666667,
+        "meanPathLength": 0.518030717531588,
+        "meanDuration": 10.59666666666667
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7353656269375127,
+        "meanTimeCost": 14.363333333333335,
+        "meanPathLength": 0.49773393905962937,
+        "meanDuration": 14.363333333333335
+      },
+      "bestValidationScore": 0.7419932576498045,
+      "improved": false,
+      "weights": [
+        0.6270787322644963,
+        0.5548528565410724,
+        1.2441796510993393,
+        0.18086607799325954,
+        0.06119820925129965,
+        0.4464043875725746
+      ],
+      "candidateMeanReward": 0.8958422367777269,
+      "gradientNorm": 0.6139230263967801
+    },
+    {
+      "generation": 12,
+      "train": {
+        "episodes": 6,
+        "successes": 6,
+        "successRate": 1,
+        "meanReward": 0.9251939245242236,
+        "meanTimeCost": 10.88,
+        "meanPathLength": 0.5113669820497069,
+        "meanDuration": 10.88
+      },
+      "validation": {
+        "episodes": 6,
+        "successes": 5,
+        "successRate": 0.8333333333333334,
+        "meanReward": 0.7330767105260995,
+        "meanTimeCost": 14.709999999999999,
+        "meanPathLength": 0.49274013162763275,
+        "meanDuration": 14.709999999999999
+      },
+      "bestValidationScore": 0.7419932576498045,
+      "improved": false,
+      "weights": [
+        0.6337896390387726,
+        0.5511135604666358,
+        1.2308167097501799,
+        0.18097583731269334,
+        0.05803879815778563,
+        0.42951549376709897
+      ],
+      "candidateMeanReward": 0.9258771989672303,
+      "gradientNorm": 0.040289046553241385
+    }
+  ],
+  "optimizer": {
+    "step": 12,
+    "m": [
+      0.03166095520867225,
+      -0.024146043737592146,
+      -0.0492177242460885,
+      0.00114295760181025,
+      -0.06361122143372168,
+      -0.12321114954178941
+    ],
+    "v": [
+      0.0006319556187261481,
+      0.0009437939403532315,
+      0.0009948299918349996,
+      0.0003927012841765102,
+      0.0007193432556984079,
+      0.0017347026231378647
+    ]
+  },
+  "rngState": 2961756155,
+  "counters": {
+    "trainRollouts": 654,
+    "validationRollouts": 78,
+    "testRollouts": 96,
+    "candidateEvaluations": 96,
+    "testEvaluations": 1,
+    "totalEpisodes": 828
+  },
+  "evaluated": true,
+  "lastTest": {
+    "generation": 12,
+    "baseline": {
+      "episodes": 32,
+      "successes": 32,
+      "successRate": 1,
+      "meanReward": 0.9235276793705008,
+      "meanTimeCost": 11.1225,
+      "meanPathLength": 0.5225221416373156,
+      "meanDuration": 11.1225
+    },
+    "best": {
+      "episodes": 32,
+      "successes": 32,
+      "successRate": 1,
+      "meanReward": 0.9294084839564798,
+      "meanTimeCost": 10.229374999999997,
+      "meanPathLength": 0.5390286097920376,
+      "meanDuration": 10.229374999999997
+    },
+    "current": {
+      "episodes": 32,
+      "successes": 32,
+      "successRate": 1,
+      "meanReward": 0.9219859659036617,
+      "meanTimeCost": 11.355000000000004,
+      "meanPathLength": 0.5206576716761182,
+      "meanDuration": 11.355000000000004
+    }
+  }
+}

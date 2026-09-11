@@ -1,5 +1,7 @@
 # Zebrafish Neural / $ZNEURO
 
+> **Experimental branch:** this branch adds a separate [local learning controller demo](experiments/learning-demo/README.md). Run it with `node experiments/learning-demo/serve.mjs`. The released website and shared Wikipedia runtime are unchanged. This demo learns six controller gains across trials and evaluates selected parameters on held-out synthetic tasks.
+
 **A zebrafish-inspired neural controller operating a real browser.**
 
 One shared model receives Chromium screenshots, extracts visual contrast, and turns eight evolving population states into cursor movement, permitted link clicks, and scrolling. Spectators see the same browser, neural state, retinal input, and event log. The homepage also offers a browser-local target test with synthetic visual input, scored trials and JSON export. Each visitor runs an independent target session using the same model equations. A separate laboratory provides additional controlled experiments and measured anatomy inspection.
