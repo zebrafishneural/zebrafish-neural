@@ -1,0 +1,67 @@
+{
+  "title": "ZAPBench larval zebrafish segmented-neuron centroids",
+  "source_url": "https://storage.googleapis.com/zapbench-release/fluroglancer/assets/240924_dataframe_centroids.json",
+  "source_bytes": 5639867,
+  "source_sha256": "12ffd6a4f083db6cff53ef1e6815519ae6cfb6dd17757828b2962ccf84d2afca",
+  "retrieved_utc_date": "2026-09-11",
+  "count": 71721,
+  "format": "Little-endian float32, interleaved x,y,z, no header; 3 floats per neuron",
+  "binary_bytes": 860652,
+  "binary_sha256": "3a107aacede24594d0819c61b36f1ef701597a8e2f90c01eec7c6358f5197fc3",
+  "id_mapping": "zero-based row i -> segmentation label i+1; source labels verified consecutive 1..71721",
+  "units": "micrometers; verified against physical segmentation metadata and exact label-1 centroid reconstruction",
+  "coordinate_system": "Official fluroglancer viewer coordinate system, preserved without modification",
+  "bounds_xyz": [
+    [
+      -240.1217313433,
+      263.4568309859
+    ],
+    [
+      -410.5191413613,
+      407.6640987654
+    ],
+    [
+      -124.0,
+      129.2753623188
+    ]
+  ],
+  "source_volume_to_viewer_transform": {
+    "x_um": "(native_y_voxel - 664) * 0.406",
+    "y_um": "-(native_x_voxel - 1024) * 0.406",
+    "z_um": "(native_z_voxel - 36) * 4",
+    "verification": "Exact agreement for independently retrieved segmentation label 1; do not claim unverified anatomical side names"
+  },
+  "native_segmentation_metadata_url": "https://storage.googleapis.com/zapbench-release/volumes/20240930/segmentation/zarr.json",
+  "native_volume_shape_xyz": [
+    2048,
+    1328,
+    72
+  ],
+  "native_volume_voxel_size_nm": [
+    406,
+    406,
+    4000
+  ],
+  "anatomical_orientation": "Anatomical left/right, rostral/caudal and dorsal/ventral signs not documented in retrieved metadata; display source-coordinate axes, not inferred anatomical labels.",
+  "region_labels": null,
+  "connectivity": null,
+  "activity": null,
+  "license": "CC-BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "license_evidence_url": "https://zapbench-release.storage.googleapis.com/volumes/README.html",
+  "attribution": "ZAPBench; activity acquired by Alex Bo-Yuan Chen in the Ahrens lab, HHMI Janelia; segmentation annotations by the CellMap Project Team, HHMI Janelia; processing, alignment, segmentation and trace extraction by Google Research. Data CC-BY 4.0.",
+  "paper_url": "https://openreview.net/forum?id=oCHsDpyawq",
+  "official_viewer_url": "https://storage.googleapis.com/zapbench-release/fluroglancer/open.html",
+  "official_loader_source_url": "https://github.com/google-research/zapbench/blob/main/fluroglancer/src/js/globals.js",
+  "official_geometry_source_url": "https://github.com/google-research/zapbench/blob/main/fluroglancer/src/js/geometry.js",
+  "processing": [
+    "Preserved all original points and ordering for binary file",
+    "Converted float64 JSON values to float32",
+    "8192-point JSON sample selected uniformly without replacement using Python random seed 20260911; rounded to 4 decimal places"
+  ],
+  "limitations": [
+    "These are centroids from cell segmentation of functional imaging, not synapse-resolved connections.",
+    "The asset does not contain validated regional labels or activity traces.",
+    "Any simulated colors or activity applied by an app must be labeled as simulation, independently of these real anatomical positions."
+  ]
+}

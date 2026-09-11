@@ -1,0 +1,9 @@
+.git
+.openai
+.sites-runtime
+node_modules
+runtime/data
+runtime/logs
+.env
+.env.*
+*.log

@@ -1,0 +1,14 @@
+node_modules/
+.sites-runtime/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+coverage/
+runtime/data/
+runtime/logs/
+.vercel/
+
+.vercel
+.env*

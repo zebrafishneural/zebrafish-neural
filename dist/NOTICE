@@ -1,0 +1,20 @@
+ZAPBench anatomical data
+======================
+dist/data/zapbench-centroids-71721.f32 is derived from the ZAPBench official
+fluroglancer centroid file. All 71,721 positions and their ordering are kept;
+original JSON floating point values were converted to little-endian float32.
+No activity, connection graph or region annotations are included.
+
+Attribution: ZAPBench; activity acquired by Alex Bo-Yuan Chen in the Ahrens
+lab, HHMI Janelia; segmentation annotations by the CellMap Project Team,
+HHMI Janelia; processing, alignment, segmentation and trace extraction by
+Google Research.
+
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+License evidence: https://zapbench-release.storage.googleapis.com/volumes/README.html
+Source: https://storage.googleapis.com/zapbench-release/fluroglancer/assets/240924_dataframe_centroids.json
+Access date: 2026-09-11
+
+Full provenance and hashes: dist/data/zapbench-centroids.metadata.json
+The code's MIT license does not replace this dataset license.

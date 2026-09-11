@@ -1,0 +1,22 @@
+{
+  "name": "zebrafish-neural",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Zebrafish Neural: a zebrafish-inspired controller and the proposed $ZNEURO Genesis launch experiment.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "docs": "node scripts/build-docs.mjs",
+    "runtime": "node runtime/server.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "playwright": "1.63.0",
+    "sharp": "0.35.4",
+    "ws": "8.21.3"
+  }
+}

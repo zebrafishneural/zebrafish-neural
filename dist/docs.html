@@ -1,0 +1,164 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b2029"><title>Methods & Genesis protocol — Zebrafish Neural</title><meta name="description" content="The proposed Zebrafish Neural Genesis mechanism, current launch status, model equations and data provenance. Pons integration and token launch are pending."><meta name="twitter:site" content="@zebrafishneural"><link rel="canonical" href="https://zebraneural.com/docs.html"><link rel="icon" href="./assets/zebrafish-neural.png" type="image/png"><link rel="stylesheet" href="./style.css"></head><body><header class="topbar">
+  <a class="brand" href="./" aria-label="Zebrafish Neural home"><img src="./assets/zebrafish-neural.png" width="48" height="48" alt=""><span>Zebrafish<br>Neural</span></a>
+  <nav aria-label="Main navigation"><a href="./">Live</a><a class="current" href="./docs.html" aria-current="page">Methods & data</a><a href="./#genesis">Genesis</a><a href="https://github.com/zebrafishneural/zebrafish-neural" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://x.com/zebrafishneural" target="_blank" rel="noopener noreferrer">Follow on X ↗</a></nav>
+  <span class="version">$ZNEURO <b>PRE-LAUNCH</b></span>
+ </header>
+<main><div class="docs-layout"><nav class="docs-nav" aria-label="Methods navigation"><a href="#overview">Overview</a><a href="#live">Live controller</a><a href="#experiment">Laboratory</a><a href="#genesis">Genesis protocol</a><a href="#model">Model specification</a><a href="#data">Data provenance</a><a href="#roadmap">Development plan</a><a href="./">← Live view</a></nav><article class="docs-content">
+<section id="overview"><div class="doc-kicker">Zebrafish Neural / METHODS AND DATA</div><h1>From model dynamics<br>to the Genesis experiment.</h1><p>Zebrafish Neural Genesis proposes a Pons token launch triggered by a zebrafish-inspired neural controller. The planned ticker is $ZNEURO; no token contract has been issued. One shared process now connects real browser screenshots to the model and applies its motor output to the cursor. The controlled laboratory remains available separately. Pons integration and the token launch are pending.</p><div class="provenance-grid"><div><h3>Simulated dynamics</h3><p>Eight continuous population states driven by browser-image contrast in the shared run, or synthetic stimuli in the laboratory. Parameters are hand-set and have not been fitted to biological activity.</p></div><div><h3>Measured geometry</h3><p>71,721 ZAPBench cell centroids. These positions have no assigned model activity, regional labels or connectivity in this release.</p></div></div></section>
+<section id="experiment"><h2>Controlled laboratory sessions</h2><ol><li>Open the <a href="./laboratory.html">laboratory</a>. The controller starts automatically with a moving visual target.</li><li>Compare the retinal image, model states, trajectory and motor time series. The model continues beyond 60 seconds.</li><li>Pause to change stimulus or contrast, then Resume. Restart clears state and recording; a running session continues and a paused session stays paused.</li><li>Export JSON or CSV at any time. Exports retain only the latest 60 model seconds, with original session timestamps.</li><li>Use Population model to inspect simulated activity, or ZAPBench anatomy to examine measured cell positions independently.</li></ol><p>The session suspends when the tab is hidden and resumes when visible unless manually paused. Closing or reloading the laboratory ends that local session. This does not affect the shared live controller. Continuous execution does not imply continuous movement: no stimulus produces no activity, and the looming shadow is a single presentation.</p><p>Drag the brain view or use arrow keys to rotate. The mouse wheel and +/− keys control zoom. Data stay in browser memory until exported.</p></section>
+<section id="live"><h2>Shared browser controller</h2><p>The Live page observes one Node.js process and one isolated Chromium browser on the operator's computer. Opening another viewer does not create another model. Closing a viewer does not stop the process. The computer must remain awake and connected to the internet.</p>
+<h3>Input and dynamics</h3>
+<p>Chromium captures a real 1,120 × 700 pixel viewport approximately twice per second. The adapter decodes the screenshot to grayscale and samples a 32 × 16 retinal field centered on the last applied cursor position and oriented with its heading. The field spans 320 pixels laterally and from 35 pixels behind to 165 pixels ahead. Sampling clamps at viewport boundaries.</p>
+<p>The absolute difference from a 3 × 3 local mean supplies contrast. The mean contrast in each half of the retina is multiplied by 6; central contrast is multiplied by 4. Features are clamped to 0–1. Uniform white or black images therefore do not create visual drive. Threat input is zero; this adapter does not detect looming objects.</p>
+<p>The existing eight-state population equations advance with fixed 20 ms steps in a server timer. The latest visual observation is held between captures. A slow host caps accumulated wall time rather than taking unstable integration steps; model time and process uptime are displayed separately.</p>
+<h3>Cursor and click mapping</h3>
+<p>The model's kinematic body coordinates map directly to viewport cursor coordinates. The applied cursor, heading, and source frame identify the next observation. The interface's cursor marker is an overlay showing the applied browser position; it is not included in the neural input.</p>
+<p>A click is proposed after central contrast remains above 0.06, spinal drive exceeds 0.025, and the absolute motor-rate difference stays below 0.08 for 1.2 model seconds. Proposals have an eight-model-second cooldown. Each proposal retains its decision coordinates, model time, and input frame identifier. These thresholds are human-designed parameters, not inferred biological behavior.</p>
+<p>The browser accepts a proposal only when the point is an ordinary article link on the permitted domain. A rejected proposal is recorded. Motor activity near the top or bottom edge can drive a scroll, with a four-second wall-clock cooldown.</p>
+<h3>Assistance and boundaries</h3>
+<p>The operator supplies the initial set of Wikipedia articles. The adapter rotates to the next article after three wall-clock minutes, independently of the model. These rotations are marked <strong>assistance</strong>, separately from <strong>controller</strong> clicks and scrolls. The model has no instruction to read, understand, or choose an article topic.</p>
+<p>Navigation requests and redirects are restricted to HTTPS English Wikipedia article URLs. Account pages, namespaces, query-based actions, forms, downloads, popups, and non-GET requests are excluded. The browser uses a fresh context without the operator's accounts, wallet, or extensions. It has no typing or transaction-signing action.</p>
+<h3>Stream and recovery</h3>
+<p>The shared service publishes real screenshots, retinal input, rates, applied cursor position, page URL, model time, session ID, and recent events over a read-only WebSocket. Spectators cannot pause, restart, or command the controller. Slow subscribers are disconnected rather than blocking the model.</p>
+<p>Input older than four seconds suspends model actions. Navigation invalidates the prior observation; captures spanning a document change are discarded. The frontend marks delayed or disconnected streams and automatically reconnects. It never substitutes synthetic motion for missing live data.</p>
+<p>The runtime saves population rates, body position, model time, step count, and click cooldown approximately every ten seconds. A browser failure triggers recovery. A process restart can resume a compatible checkpoint, but observation-dependent dwell and recent sample history begin again. The session ID changes when the process restarts.</p>
+<h3>Recording and connection</h3>
+<p>The download contains the latest 60 model seconds and recent events, with original model timestamps and frame references. Event files and a checkpoint are kept on the host. This is a recent-run export, not a complete historical screenshot archive or a Genesis launch record.</p>
+<p>The current operator-computer deployment uses a temporary HTTPS tunnel for the read-only feed. The model continues without viewers while the host and tunnel are running. Restarting the tunnel may change its address; the website's live-feed configuration must then be updated. A stable always-on deployment requires a persistent server and hostname.</p>
+<p>The separate <strong>Laboratory</strong> page retains controlled synthetic-stimulus experiments. Its local browser session is independent of the shared live controller.</p>
+<h3>Implemented and pending</h3>
+<p>Shared browser capture, contrast encoding, neural cursor movement, permitted link clicks, streaming, event logs, and checkpoint resume are implemented. The controller is an eight-state zebrafish-inspired model; it is not a reconstructed whole brain. ZAPBench anatomy remains a separate measured reference.</p>
+<p>Pons screen integration, token form execution, signing, and the $ZNEURO launch remain pending. The roaming browser cannot create or trade tokens.</p></section>
+<section id="genesis"><h2>Genesis protocol and launch status</h2><p><strong>Project:</strong> Zebrafish Neural · <strong>Planned ticker:</strong> $ZNEURO · <strong>Updates:</strong> <a href="https://x.com/zebrafishneural">@zebrafishneural</a></p>
+<h3>Project objective</h3>
+<p><strong>A token launched through a zebrafish-inspired neural controller.</strong></p>
+<p>This describes the proposed Genesis experiment. A launch performed through this controller has not yet been demonstrated. The website streams a shared controller operating a real browser, and provides a separate controlled laboratory. Pons integration and the token launch are pending.</p>
+<h3>Proposed mechanism</h3>
+<ol>
+<li>A browser adapter samples the Pons screen and encodes it as retinal input.</li>
+<li>The model processes that input. An explicit action mapping translates motor outputs into cursor movement.</li>
+<li>A controller-generated action triggers a prepared token launch. The operator supplies the token details and economic settings and approves transaction signing.</li>
+<li>The experiment records its inputs, model outputs, browser actions and transaction result together. A completed Genesis record must include a confirmed transaction, not just a click or a signing request.</li>
+</ol>
+<p>The adapter, action mapping and execution software are human-designed parts of the experiment. Any automated assistance must be identified in the event log. The controller would not independently invent the token's identity, choose its economic settings or authorize spending.</p>
+<h3>Current implementation</h3>
+<div class="table-wrap"><table><thead><tr><th>Component</th><th>Status</th></tr></thead><tbody>
+<tr><td>Synthetic retinal input and eight-state model</td><td>Implemented</td></tr>
+<tr><td>Virtual fish movement and activity export</td><td>Implemented</td></tr>
+<tr><td>Measured ZAPBench cell positions</td><td>Included as separate reference geometry</td></tr>
+<tr><td>Shared browser screenshot input and cursor control</td><td>Implemented for permitted Wikipedia articles</td></tr>
+<tr><td>Pons screen and token-creation flow</td><td>Not connected</td></tr>
+<tr><td>Wallet signing and token creation</td><td>Not implemented</td></tr>
+<tr><td>Controller-driven launch demonstration</td><td>Pending</td></tr>
+<tr><td>Genesis transaction</td><td>Pending</td></tr>
+</tbody></table></div>
+<p>The shared controller runs independently of viewers while the operator computer is awake and connected. Its browser screenshots, model rates and actions are broadcast to all spectators. The separate laboratory retains local synthetic experiments. The shared browser does not control Pons, connect a wallet or send a transaction. There is no token address or launch transaction attributed to this controller in this release.</p>
+<h3>Evidence for a future Genesis record</h3>
+<p>A reproducible record should identify the model version, initial state, visual inputs, action mapping, model outputs and any assistance from execution software. The recording and event log should align with the confirmed transaction. Replays and a control run with model output disabled should establish which actions depended on the controller. A recording hash can identify an artifact, but cannot establish that causal relationship by itself.</p>
+<h3>Biological scope</h3>
+<p>The controller is zebrafish-inspired and uses eight population states with hand-set parameters. It is not a complete reconstructed zebrafish brain. The 71,721 measured ZAPBench centroids are an independent anatomy reference and do not drive the simulation. Token creation would demonstrate an engineered sensorimotor interaction, not biological understanding of tokens or financial decisions.</p></section>
+<section id="model"><h2>Model specification</h2><p><strong>Version:</strong> <code>zebra-rate-0.1.0</code></p>
+<p>This reduced population model supports controlled software experiments with a visual–motor feedback loop. All coefficients are design parameters. The model has not been fitted to zebrafish physiology, calcium activity, or synaptic connectivity.</p>
+<h3>State and numerical update</h3>
+<p>The state contains eight rates <code>r_i ∈ [0,1]</code>, fish position <code>(x,y)</code>, heading <code>θ</code>, and simulation time. Rates are continuous and dimensionless; they do not represent measured spikes or firing frequencies in hertz.</p>
+<p>The interface advances the model with fixed <code>Δt = 0.02 s</code> Euler steps. With <code>clip</code> denoting restriction to <code>[0,1]</code>:</p>
+<pre><code>u_i  = clip(drive_i + 0.10 r_i)
+r_i' = clip(r_i + Δt/τ_i × (u_i − r_i))</code></pre>
+<p>All drives are calculated from the previous rates before any rate is updated. No stochastic network noise is used. Rendering and simulation clocks are separate: slow rendering reduces progress relative to wall time rather than increasing the numerical step size or skipping state updates.</p>
+<div class="table-wrap"><table><thead><tr><th>State</th><th>Model role</th><th>τ (s)</th></tr></thead><tbody>
+<tr><td>r0, r1</td><td>Visual L/R</td><td>0.12</td></tr>
+<tr><td>r2, r3</td><td>Integrator L/R</td><td>0.45</td></tr>
+<tr><td>r4</td><td>Shared drive</td><td>0.20</td></tr>
+<tr><td>r5, r6</td><td>Motor L/R</td><td>0.14</td></tr>
+<tr><td>r7</td><td>Spinal drive</td><td>0.12</td></tr>
+</tbody></table></div>
+<p>These names describe model functions. They do not identify measured cell populations in the centroid dataset.</p>
+<h3>Laboratory visual encoding</h3>
+<p>The shared live controller uses contrast from real browser screenshots, as specified in the shared-controller methods. The encoder below applies to the separate controlled laboratory. Both input adapters feed the same eight-state population equations.</p>
+<p>The 32 × 16 retinal image is generated analytically from target bearing, distance, and size using a Gaussian contrast profile. It is not a screenshot of the rendered arena. Changes in fish pose affect the next observation.</p>
+<p>Contrast is summed over each half of the image and over a central strip. The resulting features are:</p>
+<pre><code>L = clip(19 × left_contrast_sum / 512)
+R = clip(19 × right_contrast_sum / 512)
+C = clip( 9 × center_contrast_sum / 512)
+E = clip( 5 × total_contrast_sum / 512)  [looming only; otherwise 0]</code></pre>
+<p>The central strip contains samples with normalized horizontal coordinate <code>|px| &lt; 0.16</code>. The baseline luminance is <code>0.05</code> for bright targets and <code>0.78</code> for the looming condition. Bright-target contrast is luminance above baseline; looming contrast is the luminance deficit below baseline. Intensity ranges from 0 to 1.</p>
+<p>For looming, the Gaussian radius increases from <code>0.10</code> to <code>0.58</code> over 1.5 seconds; its contrast fades between 2.3 and 3 seconds. The moving target changes position over time, but the encoder has no separate temporal motion detector. These visual conventions are designed inputs, not a physiological retinal model.</p>
+<h3>Population drives</h3>
+<p>Let <code>g = 1 − 0.7C(1 − E)</code>:</p>
+<pre><code>drive0 = L
+drive1 = R
+drive2 = 0.50r0
+drive3 = 0.50r1
+drive4 = 0.45(r0 + r1)
+
+non-looming:
+drive5 = g*r0     + 0.12r2 + 0.08r4
+drive6 = g*r1     + 0.12r3 + 0.08r4
+
+looming:
+drive5 = g*1.8*r1 + 0.12r3 + 0.08r4
+drive6 = g*1.8*r0 + 0.12r2 + 0.08r4
+
+drive7 = 0.55(r5 + r6) + 0.25E</code></pre>
+<p>The looming condition selects crossed visual and integrator routing from the start of the experiment. This is an explicit aversive control rule chosen by the model author. It is neither a learned association nor a circuit inferred from a connectome.</p>
+<h3>Kinematics</h3>
+<pre><code>angular velocity ω = 3.2(r6 − r5) rad/s
+forward speed    v = 0.15r7 arena units/s</code></pre>
+<p>Heading is updated before position. Positive <code>y</code> points downward in the arena. The position is confined to <code>x ∈ [0.045,0.955]</code> and <code>y ∈ [0.055,0.945]</code>; a boundary encounter reflects the heading. Position uses normalized arena coordinates rather than millimeters. Muscle dynamics, hydrodynamic forces, and body biomechanics are not modeled.</p>
+<h3>Visualization and provenance</h3>
+<p>In the schematic view, the brightness of 5,220 drawing points is derived from eight model rates. These points do not have independent neural states. The measured-geometry view displays ZAPBench cell positions with neutral coloring and no activity assignment. The bundled centroid asset contains no region labels or connectivity.</p>
+<h3>Recording and reproducibility</h3>
+<p>This section describes laboratory recordings. The shared runtime adds browser frame identifiers, action events, host checkpoints, and its own recording endpoint.</p>
+<p>The initial state is <code>x=0.5</code>, <code>y=0.75</code>, <code>θ=−π/2</code>, with all rates zero. The browser session starts automatically with the moving-target stimulus at contrast 0.7, and continues beyond 60 model seconds without restarting the state. The population model is the initial view; measured anatomy remains available separately.</p>
+<p>Pause enables the stimulus and intensity controls. Changing either resets the state and recording while retaining the pause. Restart also resets state and recording: a running session continues automatically, and a paused session stays paused. The simulation suspends while its tab is hidden and automatically resumes when visible unless manually paused. It does not advance hidden wall time on return. Reloading or closing the page ends the browser session; no persistent server runs the model.</p>
+<p>Samples are recorded every five model steps, or <code>0.1 s</code>. Both the recording and the displayed trajectory use a rolling buffer of at most 600 samples, retaining the latest 60 model seconds. Old samples expire without resetting the model. JSON exports use schema version 2 and include the model version, configuration, time step, sample interval, <code>totalSteps</code>, units, provenance and samples. <code>durationSeconds</code> is total elapsed model time; <code>recording.startTimeSeconds</code> and <code>recording.endTimeSeconds</code> identify the retained interval, which may omit earlier session history. CSV exports contain time, pose, speed, angular velocity, and the eight rates, using the original session timestamps. Keep the JSON file with the CSV: the CSV does not carry configuration or provenance.</p>
+<p>An experiment can be reproduced in code from its initial state with <code>makeState(config)</code> and repeated <code>step</code> calls using the same model version and total step count; then select the exported time interval. The interface does not yet import JSON recordings. Reproduction concerns the simulated trajectory and sampled values, not the export creation timestamp.</p>
+<p>Continuous stepping does not imply constant activity or motion. The dark condition remains silent, and looming is a single presentation that fades after three model seconds. Restart repeats that presentation; the session does not silently cycle stimuli.</p>
+<h3>Validation</h3>
+<p><code>npm test</code> covers zero-contrast behavior, mirror symmetry, the designed looming avoidance rule, bounded state over 60 seconds, deterministic and chunked execution, pose-dependent retinal input, CSV columns, invalid time steps, and centroid count/checksum integrity. Session checks cover automatic start, ten minutes of uninterrupted model time with bounded recording, visibility suspension, manual pause, restart behavior and slow-frame timing.</p>
+<p>These checks evaluate implementation behavior and data integrity. No calcium fit, spike-prediction benchmark, or biological whole-brain validation has been performed.</p></section>
+<section id="data"><h2>Data provenance</h2><h3>Included geometry: ZAPBench</h3>
+<p>The application includes <strong>71,721 measured cell centroids</strong> derived from segmentation of functional imaging in ZAPBench. They are displayed as a separate geometry layer. The bundled asset contains no activity traces, connectivity, or anatomical region labels.</p>
+<div class="table-wrap"><table><thead><tr><th>Resource</th><th>Reference</th></tr></thead><tbody>
+<tr><td>Original centroid file</td><td><a href="https://storage.googleapis.com/zapbench-release/fluroglancer/assets/240924_dataframe_centroids.json">Official JSON</a></td></tr>
+<tr><td>Dataset and methods</td><td><a href="https://zapbench-release.storage.googleapis.com/landing.html">ZAPBench</a></td></tr>
+<tr><td>Code</td><td><a href="https://github.com/google-research/zapbench">google-research/zapbench</a></td></tr>
+<tr><td>License evidence</td><td><a href="https://zapbench-release.storage.googleapis.com/volumes/README.html">Dataset README</a> — CC BY 4.0</td></tr>
+<tr><td>Local manifest</td><td><a href="./data/zapbench-centroids.metadata.json">Coordinates, hashes, attribution, and processing</a></td></tr>
+</tbody></table></div>
+<p>The local binary <code>dist/data/zapbench-centroids-71721.f32</code> contains 860,652 bytes: interleaved <code>x,y,z</code> coordinates stored as little-endian float32 with no header. Zero-based row <code>i</code> corresponds to segmentation label <code>i+1</code>. All source positions and their ordering are retained; conversion from the source JSON to float32 reduces numerical precision.</p>
+<h3>Coordinates</h3>
+<p>The file preserves the official Fluroglancer viewer coordinates in micrometers. The documented transformation from the native segmentation volume is:</p>
+<pre><code>x_um =  (native_y_voxel − 664)  × 0.406
+y_um = −(native_x_voxel − 1024) × 0.406
+z_um =  (native_z_voxel − 36)   × 4</code></pre>
+<p>The manifest records agreement with an independently reconstructed centroid for segmentation label 1 and links the native volume metadata. Anatomical axis signs were not established by the retrieved metadata. The viewer preserves the source coordinate orientation without assigning left/right, rostral/caudal, or dorsal/ventral labels.</p>
+<p>For display, the application subtracts the cloud's bounding-box center and scales its largest axis extent to 3.4 rendering units. This view transformation leaves the physical coordinates in the binary file unchanged.</p>
+<h3>Relationship to the model</h3>
+<p>The eight-population model receives contrast from real browser screenshots in the shared live controller and synthetic retinal input in the controlled laboratory. It does not load the centroid file, infer connections from spatial proximity, or map model rates onto measured cells. No parameters have been fitted to biological calcium recordings.</p>
+<p>Geometry, activity, and connectivity have independent provenance. A measured geometry layer does not establish the origin or validity of a dynamic model.</p>
+<h3>Candidate extensions</h3>
+<p><a href="https://mapzebrain.org/zebrafishatlas/main_page">mapZebrain</a> is a candidate source for regional annotations and neuronal morphologies. No mapZebrain atlas is bundled in v0.1.</p>
+<p>ZAPBench activity traces could support a separate recording-playback mode and later model evaluation. A comparison between calcium fluorescence and normalized model rates requires an explicit observation model, preprocessing description, and separation of fitting and evaluation data.</p>
+<p><a href="https://flybrain.online/">FLYBRAIN</a> and <a href="https://github.com/fruitflydev/flycoinrh">flycoinrh</a> provide an interaction reference. Their code and fly data files have not been copied. No cross-species equivalence of neuron labels or neurotransmitter assignments is assumed.</p>
+<h3>Attribution</h3>
+<p>ZAPBench activity was acquired by Alex Bo-Yuan Chen in the Ahrens lab, HHMI Janelia. Segmentation annotations are credited to the CellMap Project Team, HHMI Janelia; processing, alignment, segmentation, and trace extraction to Google Research. The derivative retains the dataset's <strong>CC BY 4.0</strong> license, independently of the application's MIT code license. See <a href="../NOTICE">NOTICE</a> and the <a href="./data/zapbench-centroids.metadata.json">manifest</a> for the complete provenance record.</p></section>
+<section id="roadmap"><h2>Research and development plan</h2><h3>v0.1: computational baseline</h3>
+<p>The current release implements a deterministic synthetic visual–motor loop, a virtual retina and arena, a schematic model view, an independent measured-centroid view, and activity recording. Browser sessions start automatically and retain the latest 60 model seconds without a run duration limit. Model equations, data transformations, and validation limits are documented.</p>
+<p>The shared live controller now runs in a separate Node.js process with Chromium, screenshot input, model-driven cursor actions, event recording, and checkpoint resume. The current host is the operator computer. The next infrastructure step is a persistent server and stable hostname.</p>
+<h3>Next milestone: Genesis browser adapter</h3>
+<p>The shared screenshot-to-cursor loop is implemented on permitted Wikipedia articles. Extend and evaluate that adapter against the Pons interface without signing or broadcasting transactions. Document which actions depend on model output and which require assistance from execution software.</p>
+<p>A later Genesis launch would connect a controller-generated action to a prepared Pons token creation flow with operator-approved signing. Completion requires an aligned experiment record and a confirmed launch transaction. Pons integration and the token launch are pending; neither is part of the current website update.</p>
+<h3>Measured activity playback</h3>
+<p>Select a small ZAPBench recording interval and package it as a separate recording adapter with its source, license, sample interval, and processing history. Display recorded activity with its own time axis and provenance. Playback must remain distinguishable from a running simulation.</p>
+<p>Completion requires a reproducible extraction procedure, a data manifest, and a verified mapping between included traces and their cell identifiers. The existing population model should not be presented as the source of the recorded activity.</p>
+<h3>Comparison with experimental data</h3>
+<p>Establish stimulus timing, cell or regional correspondence, and a calcium observation model before fitting parameters. Separate fitting and evaluation intervals, specify temporal and behavioral metrics, and report failed as well as successful model predictions. Benchmark results should identify the exact model and dataset versions used.</p>
+<h3>Anatomical constraints</h3>
+<p>Evaluate coordinate registration and regional labels from mapZebrain. Extend network topology only where suitable connectivity evidence is available. Record unsupported connections as assumptions and retain the distinction between morphological overlap and confirmed synaptic connectivity.</p>
+<h3>External visual environments</h3>
+<p>A controlled screenshot adapter and an explicit motor-to-cursor mapping now drive the shared browser. Visual encoding, dynamics, and action mapping are documented in the live-controller methods.</p>
+<p>The planned Pons Genesis adapter would use this boundary. Simulation remains independent of transaction execution. The current release includes permitted article navigation and no financial transactions.</p>
+<h3>Open development</h3>
+<p>Source code and methods are published in <a href="https://github.com/zebrafishneural/zebrafish-neural">zebrafishneural/zebrafish-neural</a>. The included GitHub Actions workflow runs <code>npm test</code> and <code>npm run check</code>. Initial issues can follow the Genesis adapter, measured-playback, evaluation, and anatomical-registration milestones above.</p></section>
+</article></div><footer class="lab-footer"><div><p class="footer-brand">Zebrafish Neural / $ZNEURO</p><p>Computational sensorimotor research prototype.</p></div><a href="https://x.com/zebrafishneural" target="_blank" rel="noopener noreferrer">@zebrafishneural ↗</a><a href="./">Return to the live view ↗</a></footer></main></body></html>
