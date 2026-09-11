@@ -1,9 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "npm run docs && npm run check",
-  "installCommand": "echo Skipping dependency installation for static frontend",
+  "buildCommand": "node scripts/build-learning.mjs && npm run docs && npm run check",
+  "installCommand": "echo Frontend and challenge functions use no external packages",
   "outputDirectory": "dist",
+  "functions": {
+    "api/challenge-*.js": {"maxDuration": 15}
+  },
   "headers": [
     {"source":"/live-config.json","headers":[{"key":"Cache-Control","value":"no-store, max-age=0"}]},
     {"source":"/learning-config.json","headers":[{"key":"Cache-Control","value":"no-store, max-age=0"}]},

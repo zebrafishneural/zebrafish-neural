@@ -96,7 +96,7 @@ export function scenarioSet(split,seed=20260911,count=COUNTS[split]){
 
 // Only these six bilateral connection gains differ from the frozen controller.
 // Targets reach the policy solely through the unchanged synthetic retina encoder.
-function parameterStep(state,weights){
+export function parameterStep(state,weights){
   renderRetina(state);
   const r=state.rates,f=state.features,escape=f.threat;
   const aversive=state.config.mode==='looming';

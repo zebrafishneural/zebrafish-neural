@@ -16,6 +16,8 @@ One shared model receives Chromium screenshots, extracts visual contrast, and tu
 
 **Persistent target learning:** A separate supervised process on the AWS Windows host adjusts and retains six connection gains, with checkpoint persistence and fresh-target evaluations. The public [learning page](https://zebraneural.com/learning.html) displays saved evaluations and labeled local replays through a read-only HTTPS endpoint. It does not learn article content or change the shared Wikipedia controller's fixed parameters. See [methods, records and local setup](experiments/learning-live/README.md).
 
+**Challenge the fish:** Configure a [public challenge](https://zebraneural.com/challenge.html) and compare the original gains with a frozen set of saved gains on the same synthetic task. Share links preserve the exact inputs; a separate server calculation can check the resulting scores. These local trials do not update AWS training state. See [challenge methods and verification limits](docs/challenge.md).
+
 ## Current implementation
 
 | Component | Implementation |
@@ -30,6 +32,7 @@ One shared model receives Chromium screenshots, extracts visual contrast, and tu
 | Recording | Recent 60 model seconds, recent events and bounded host event files |
 | Target test | Per-viewer synthetic target reaching, reversal and input occlusion; scored attempts and session JSON |
 | Persistent target learner | Separate server process; six adjustable gains, scored synthetic trials, saved checkpoints and generation records |
+| Challenge | Browser-local paired trials with frozen gains, configurable targets, reproducible share links and server recomputation |
 | Laboratory | Synthetic stimuli, virtual swimming, exports and separate anatomy viewer |
 | Anatomy | 71,721 measured ZAPBench cell centroids, independent of model dynamics |
 
@@ -101,6 +104,7 @@ The frontend deploys to Vercel from `dist/`. The continuous browser and persiste
 
 - [Shared browser input, actions and runtime](docs/runtime.md)
 - [Browser-local target-test methods and records](docs/target-test.md)
+- [Challenge tasks, sharing and server recomputation](docs/challenge.md)
 - [Token launch record and experimental scope](docs/genesis.md)
 - [Model equations and validation](docs/model.md)
 - [Data provenance](docs/data.md)
