@@ -28,7 +28,7 @@ The transaction receipt and token readouts were checked through Robinhood Chain 
 
 The shared controller continues to receive real Chromium screenshots and operate permitted Wikipedia article pages. Its eight-state model drives cursor movement, gated link clicks, and scrolling. Operator-supplied article rotations are recorded separately as assistance.
 
-The operator computer runs this experiment independently of viewers. The website streams its browser frames, retinal input, model rates, and action events. The separate laboratory provides controlled synthetic-stimulus experiments and measured anatomy inspection.
+A supervised AWS Windows host runs this experiment independently of viewers. The website streams its browser frames, retinal input, model rates, and action events over the read-only HTTPS/WSS feed. The separate laboratory provides controlled synthetic-stimulus experiments and measured anatomy inspection.
 
 | Component | Current status |
 | --- | --- |

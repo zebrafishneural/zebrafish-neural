@@ -14,5 +14,9 @@ await writeFile(resolve(root,'dist/learning.html'),html);
 await writeFile(resolve(root,'dist/learning.js'),js);
 await writeFile(resolve(root,'dist/learning.css'),await readFile(resolve(source,'live.css'),'utf8'));
 await writeFile(resolve(root,'dist/lib/learning-core.js'),core);
-await writeFile(resolve(root,'dist/learning-config.json'),JSON.stringify({endpoint:''})+'\n');
+const configPath=resolve(root,'dist/learning-config.json');
+try{await readFile(configPath);}catch(error){
+  if(error.code!=='ENOENT')throw error;
+  await writeFile(configPath,JSON.stringify({endpoint:''})+'\n');
+}
 console.log('Built the read-only learning view. The shared Wikipedia frontend is unchanged.');

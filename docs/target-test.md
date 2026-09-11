@@ -59,6 +59,8 @@ Inspect results by protocol and retain failed and intervened attempts alongside 
 
 ## Scope and deployment
 
-The feature runs alongside the original website interface and uses its existing brain, retina and event panels. Adding the target test does not migrate the shared controller to a new server or increase its approximately 2 Hz screenshot feed. The Wikipedia runtime remains on the operator computer until a separate migration is completed.
+The feature runs alongside the original website interface and uses its existing brain, retina and event panels. It remains a browser-local experiment with no learning between attempts. The shared Wikipedia runtime now runs separately on a supervised AWS Windows host; its screenshot feed remains approximately 2 Hz.
+
+The public [Learning controller](https://zebraneural.com/learning.html) is a separate experiment that adjusts and saves six gains through scored synthetic trials. Its server checkpoints and generation history do not change the local target test's parameters or session-retention rules.
 
 Neither experiment captures the operator's desktop or uses a wallet. The target experiment has no token-launch action, signing capability or control over the shared browser. The token contract and operator-launched record are unchanged.

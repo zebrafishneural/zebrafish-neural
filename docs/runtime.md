@@ -1,6 +1,6 @@
 # Shared browser controller
 
-The Live page observes one Node.js process and one isolated Chromium browser on the operator's computer. Opening another viewer does not create another model. Closing a viewer does not stop the process. The computer must remain awake and connected to the internet.
+The Live page observes one supervised Node.js process and one isolated Chromium browser on an AWS Windows server. Opening another viewer does not create another model. Closing a viewer does not stop the process. The server runs the experiment independently of viewers.
 
 ## Input and dynamics
 
@@ -36,9 +36,15 @@ The runtime saves population rates, body position, model time, step count, and c
 
 The download contains the latest 60 model seconds and recent events, with original model timestamps and frame references. Event files and a checkpoint are kept on the host. This is a recent-run export rather than a complete historical screenshot archive. The operator's manual token launch is documented separately in the [token launch record](genesis.md).
 
-The current operator-computer deployment uses a temporary HTTPS tunnel for the read-only feed. The model continues without viewers while the host and tunnel are running. Restarting the tunnel may change its address; the website's live-feed configuration must then be updated. A stable always-on deployment requires a persistent server and hostname.
+The frontend is hosted on Vercel. Caddy forwards the stable HTTPS endpoint `https://feed.zebraneural.com` and its read-only `/ws` WebSocket to the browser service on the AWS host. The model continues without viewers while its supervised process is running. A host or process restart creates a new session ID and process uptime; compatible saved model state resumes separately.
 
 The separate **Laboratory** page retains controlled synthetic-stimulus experiments. Its local browser session is independent of the shared live controller.
+
+## Separate persistent target learner
+
+The public [Learning controller](https://zebraneural.com/learning.html) observes a separate supervised process on the AWS host. It adjusts six connection gains through scored synthetic target-reaching trials, retains parameters that pass its validation gate, and saves the candidate, retained gains, optimizer state and generation records. Fresh-target evaluations are recorded separately from the validation results used for selection.
+
+The page receives read-only state from `https://learning.zebraneural.com` and illustrates the saved gains with labeled local replays. These replays are distinct from the server's training trials. The Wikipedia controller still uses fixed parameters: target learning does not teach it article content, provide biological validation or connect it to a wallet.
 
 ## Implemented and pending
 

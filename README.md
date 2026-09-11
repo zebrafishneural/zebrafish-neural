@@ -1,6 +1,6 @@
 # Zebrafish Neural / $ZNEURO
 
-> **Experimental branch:** this branch adds a separate [local learning controller demo](experiments/learning-demo/README.md). Run it with `node experiments/learning-demo/serve.mjs`. The released website and shared Wikipedia runtime are unchanged. This demo learns six controller gains across trials and evaluates selected parameters on held-out synthetic tasks.
+> **Persistent learning:** the public [Learning controller](https://zebraneural.com/learning.html) observes a separate server process that adjusts and saves six controller gains across scored synthetic trials. The Wikipedia controller continues with fixed parameters. The original [local learning demo](experiments/learning-demo/README.md) remains available for independent experiments.
 
 **A zebrafish-inspired neural controller operating a real browser.**
 
@@ -14,13 +14,13 @@ One shared model receives Chromium screenshots, extracts visual contrast, and tu
 - Updates: [@zebrafishneural](https://x.com/zebrafishneural)
 - Source: [zebrafishneural/zebrafish-neural](https://github.com/zebrafishneural/zebrafish-neural)
 
-**Persistent target learning:** A separate learning controller adjusts and retains six connection gains, with server-side training, checkpoint persistence and fresh-target evaluations. Start the local observer at http://127.0.0.1:4189/ using the command in its README; public hosting is not enabled in this branch. The shared Wikipedia controller still uses fixed parameters. See [methods and records](experiments/learning-live/README.md).
+**Persistent target learning:** A separate supervised process on the AWS Windows host adjusts and retains six connection gains, with checkpoint persistence and fresh-target evaluations. The public [learning page](https://zebraneural.com/learning.html) displays saved evaluations and labeled local replays through a read-only HTTPS endpoint. It does not learn article content or change the shared Wikipedia controller's fixed parameters. See [methods, records and local setup](experiments/learning-live/README.md).
 
 ## Current implementation
 
 | Component | Implementation |
 | --- | --- |
-| Shared runtime | One Node.js process, one isolated Chromium context, one model |
+| Shared runtime | One supervised Node.js process, one isolated Chromium context, one model on AWS Windows |
 | Input | Real screenshots at approximately 2 Hz; heading-oriented 32 × 16 retinal crop |
 | Dynamics | Eight population rates; fixed 20 ms integration steps |
 | Actions | Model-driven cursor, explicit click gate, edge scrolling |
@@ -29,10 +29,11 @@ One shared model receives Chromium screenshots, extracts visual contrast, and tu
 | Recovery | Stale-input suspension, browser retry, periodic checkpoints |
 | Recording | Recent 60 model seconds, recent events and bounded host event files |
 | Target test | Per-viewer synthetic target reaching, reversal and input occlusion; scored attempts and session JSON |
+| Persistent target learner | Separate server process; six adjustable gains, scored synthetic trials, saved checkpoints and generation records |
 | Laboratory | Synthetic stimuli, virtual swimming, exports and separate anatomy viewer |
 | Anatomy | 71,721 measured ZAPBench cell centroids, independent of model dynamics |
 
-The model has hand-set parameters and has not been fitted to biological recordings. The 5,220 schematic drawing points represent eight states, not individually simulated neurons. Measured centroids do not supply connectivity or drive activity. This is not a complete zebrafish brain reconstruction.
+The Wikipedia controller has hand-set parameters. The separate target learner optimizes six gains against synthetic task outcomes; neither model has been fitted to biological recordings. The 5,220 schematic drawing points represent eight states, not individually simulated neurons. Measured centroids do not supply connectivity or drive activity. This is not a complete zebrafish brain reconstruction.
 
 ## Run locally
 
@@ -53,7 +54,7 @@ npm run dev
 # http://127.0.0.1:4173
 ```
 
-For local-only use, set `dist/live-config.json` to `{"endpoint":"http://127.0.0.1:4388"}`. An HTTPS frontend needs an HTTPS runtime endpoint. The operator-computer setup uses a temporary HTTPS tunnel; restarting the tunnel may require updating its configured address.
+For local-only use, set `dist/live-config.json` to `{"endpoint":"http://127.0.0.1:4388"}`. An HTTPS frontend needs an HTTPS runtime endpoint. The public deployment uses `https://feed.zebraneural.com`, served through Caddy on the AWS host; the learning page uses `https://learning.zebraneural.com`.
 
 The runtime opens a fresh browser context. It does not capture your desktop or use personal tabs, files, accounts, or a wallet. Viewers cannot start, stop, or command the shared model. The host must remain awake and online. Closing the website does not stop the shared process.
 
@@ -94,7 +95,7 @@ docs/                  Methods, runtime protocol and roadmap
 tests/                 Behavior and integrity checks
 ```
 
-The frontend deploys to Vercel from `dist/`. The continuous browser process runs separately on the operator computer. Vercel uses `vercel.json`.
+The frontend deploys to Vercel from `dist/`. The continuous browser and persistent target learner run as separate supervised processes on the AWS Windows host. Caddy provides their stable HTTPS endpoints; Vercel does not run either continuous model process. Vercel uses `vercel.json`.
 
 ## Methods and evidence
 

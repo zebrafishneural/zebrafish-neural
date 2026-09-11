@@ -2,6 +2,8 @@
 
 A separate server process adjusts six gains in the eight-state controller through scored target-reaching trials. It runs independently of viewers and saves each completed generation before displaying it. The original Wikipedia controller is unchanged.
 
+The public [Learning controller](https://zebraneural.com/learning.html) observes the supervised learner on an AWS Windows host. The frontend is hosted on Vercel and requests its read-only API directly from `https://learning.zebraneural.com`, served through Caddy.
+
 ## Run
 
 Requires Node.js 22 or later; this process has no external package dependencies.
@@ -29,7 +31,7 @@ The browser visualizations run deterministic local replays using the actual save
 
 ## Persistence and downloadable records
 
-Private host data lives in `data/`, which is excluded from Git and deployment uploads.
+Local host data defaults to `data/`, which is excluded from Git and deployment uploads. A service wrapper can select a separate durable directory by passing `dataDir` to `startServer`; the command-line entry point does not read a data-directory environment variable.
 
 - `checkpoint.json` is the committed state, with a learner hash and matching generation-record hash.
 - `checkpoint.previous.json` keeps the preceding committed checkpoint.
@@ -48,7 +50,7 @@ Endpoints accept only GET and HEAD:
 /api/records?date=YYYY-MM-DD     Committed records for one UTC date
 ```
 
-Download timestamps and generation IDs establish which saved state a response represents. The public Vercel proxy briefly caches responses to reduce host traffic. A hash is an integrity check on the exported bytes, not an independent attestation of the experiment.
+Download timestamps and generation IDs establish which saved state a response represents. The public page requests the HTTPS API directly; there is no Vercel learning proxy. API responses use `Cache-Control: no-store`, and the visible page requests a status snapshot every three seconds. A hash is an integrity check on the exported bytes, not an independent attestation of the experiment.
 
 To reproduce a checkpoint, pass its `learner` field to `importLearner` and use `advanceLearner`. Configuration, random state and optimizer state determine the continuation. Old demo checkpoints use a different schema and must not be substituted for this learner's checkpoint.
 

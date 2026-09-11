@@ -2,7 +2,9 @@
 
 ## Current baseline
 
-The shared live controller runs in a Node.js process with Chromium, screenshot input, model-driven cursor actions, event recording, and checkpoint resume. It operates permitted Wikipedia articles on the operator computer. The homepage also provides an independent browser-local target test: target reaching, a scheduled target reversal, and a visual interruption, with scored attempts and JSON export. It uses synthetic Gaussian retinal input and unchanged model equations; it is not a shared browser-pixel experiment. A separate laboratory provides additional synthetic stimuli, a virtual arena, activity export, and an independent measured-centroid view.
+The shared live controller runs in a supervised Node.js process on an AWS Windows host with Chromium, screenshot input, model-driven cursor actions, event recording, and checkpoint resume. It operates permitted Wikipedia articles. The homepage also provides an independent browser-local target test: target reaching, a scheduled target reversal, and a visual interruption, with scored attempts and JSON export. It uses synthetic Gaussian retinal input and unchanged model equations; it is not a shared browser-pixel experiment. A separate laboratory provides additional synthetic stimuli, a virtual arena, activity export, and an independent measured-centroid view.
+
+The public [Learning controller](https://zebraneural.com/learning.html) runs separately on the server. It adjusts six connection gains through scored synthetic target trials, retains parameters through a declared validation gate and saves checkpoints and generation records. Fresh-target evaluations and no-input controls are reported separately. The Wikipedia controller's parameters remain fixed.
 
 The operator has launched the project token, ZNEURO, manually on Pons. The confirmed creation transaction is documented in the [token launch record](genesis.md). The controller did not perform that launch. Pons input, token-form execution, and signing remain outside the current runtime.
 
@@ -18,7 +20,7 @@ The released browser-local target test makes input changes, population response 
 
 The next evaluation step is to use reproducible page layouts and documented visual targets with the real screenshot adapter to measure steering, action timing, link-selection outcomes, and sensitivity to contrast. Establish how stale frames, navigation, and recovery affect behavior. Results from synthetic input and screenshot input must be reported separately. These tests do not establish semantic understanding of a web page.
 
-The next infrastructure work is a stable feed hostname and an explicit uptime/restart arrangement. Any move from the operator computer to a separate host should preserve model state, data provenance, and the distinction between host uptime and model time.
+The browser and learner now have stable HTTPS hostnames through Caddy and supervised startup on AWS Windows. Saved checkpoints and earlier records retain their provenance. Host and process restarts remain distinct from model time: a new process has a new session ID and uptime.
 
 ## Measured activity playback
 
