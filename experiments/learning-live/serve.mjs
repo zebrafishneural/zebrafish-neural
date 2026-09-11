@@ -1,10 +1,11 @@
 import {createServer} from 'node:http';
 import {Worker} from 'node:worker_threads';
-import {readFile, mkdir, rename, copyFile, open, readdir} from 'node:fs/promises';
+import {readFile, mkdir, copyFile, open, readdir} from 'node:fs/promises';
 import {resolve, extname, sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {importLearner, exportLearner} from './learner.js';
+import {renameWithRetry} from './persistence.mjs';
 
 const root = import.meta.dirname;
 const mime = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.woff2':'font/woff2'};
@@ -35,7 +36,7 @@ async function atomicJSON(path, value) {
   const pending = path + '.pending';
   const file = await open(pending, 'w');
   try {await file.writeFile(JSON.stringify(value) + '\n'); await file.sync();} finally {await file.close();}
-  await rename(pending, path);
+  await renameWithRetry(pending, path);
 }
 
 export async function startServer({port=4189, dataDir=resolve(root,'data'), intervalMs=15000, config={}, autoStart=true, beforePersist=null}={}) {
@@ -70,7 +71,7 @@ export async function startServer({port=4189, dataDir=resolve(root,'data'), inte
     await atomicJSON(resolve(dataDir,'records',filename(learner.generation)), record);
     if (committed) {
       await copyFile(checkpointPath, resolve(dataDir,'checkpoint.previous.json.pending'));
-      await rename(resolve(dataDir,'checkpoint.previous.json.pending'), resolve(dataDir,'checkpoint.previous.json'));
+      await renameWithRetry(resolve(dataDir,'checkpoint.previous.json.pending'), resolve(dataDir,'checkpoint.previous.json'));
     }
     await atomicJSON(checkpointPath, next);
     committed = next;
