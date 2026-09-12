@@ -1,5 +1,19 @@
 # Operator notes
 
+## Chess release — 12 September 2026
+
+The new `https://zebraneural.com/chess/` view uses an independent chess process on the operator's computer. This release does not change the AWS feed (`feed.zebraneural.com`) or persistent learner (`learning.zebraneural.com`). Earlier browser-tunnel setup notes below describe the original deployment and are not the current AWS cutover instructions.
+
+`npm run chess` starts the game on loopback port 4196. `npm run chess:relay` starts its read-only relay on loopback port 4396. Start each command in a separate terminal. The active local preview currently runs from the separate `outputs/zebra-shared-chess-demo` directory; do not start another game against a different data directory if you intend to preserve that match. Copy validated data with the original process stopped before moving ownership to this checkout.
+
+The relay accepts only game state, saved game/decision records and read-only WebSocket snapshots. It shares one upstream connection, sends up to five public visual samples per second plus immediate position/status changes, and supports up to 128 simultaneous spectators with compression and bounded buffering. This is a configured ceiling, not a claim of load-tested capacity. Full decision traces remain available through the record endpoint. No desktop, browser feed, shell or project-file route is exposed through the chess relay.
+
+The temporary public bridge is a Cloudflare Quick Tunnel to `http://127.0.0.1:4396` with `--http-host-header 127.0.0.1:4396`. Its HTTPS/WSS URL is configured in `dist/chess/chess-config.json`; a restarted Quick Tunnel can have a different URL, requiring that file and the frontend to be redeployed. Keep the computer awake and the game, relay and tunnel processes running. A stable named tunnel or server migration is the next operational improvement.
+
+The game saves to its own ignored `data/` directory. Restart recovers committed moves and recomputes an unfinished decision using its recorded seed. Do not copy or replace the Wikipedia/learning data directories for a chess update. `npm run test:chess` checks chess, storage, recovery and relay behavior. The local standalone package has the same tests available with `npm test`.
+
+`node scripts/build-chess.mjs` copies only the chess frontend into `dist/chess` and retains its existing connection configuration. The build never copies runtime data. The public homepage contains both a top-navigation link and a third experiment link beside Wikipedia and Target test.
+
 The public frontend is https://zebraneural.com, hosted on Vercel. Its live feed comes from an isolated Chromium process on this computer through an HTTPS tunnel. Closing a viewer does not stop that process. The computer must stay awake and online.
 
 ## Model process

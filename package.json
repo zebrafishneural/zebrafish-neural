@@ -9,6 +9,9 @@
     "test": "node --test tests/*.test.mjs",
     "check": "node scripts/check.mjs",
     "docs": "node scripts/build-docs.mjs",
+    "test:chess": "node --test experiments/chess/tests/*.test.mjs",
+    "chess": "node experiments/chess/server.mjs",
+    "chess:relay": "node experiments/chess/relay.mjs",
     "runtime": "node runtime/server.mjs"
   },
   "engines": {

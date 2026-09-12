@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "node scripts/build-learning.mjs && npm run docs && npm run check",
+  "buildCommand": "node scripts/build-learning.mjs && node scripts/build-chess.mjs && npm run docs && npm run check",
   "installCommand": "echo Frontend and challenge functions use no external packages",
   "outputDirectory": "dist",
   "functions": {
@@ -10,6 +10,7 @@
   "headers": [
     {"source":"/live-config.json","headers":[{"key":"Cache-Control","value":"no-store, max-age=0"}]},
     {"source":"/learning-config.json","headers":[{"key":"Cache-Control","value":"no-store, max-age=0"}]},
+    {"source":"/chess/chess-config.json","headers":[{"key":"Cache-Control","value":"no-store, max-age=0"}]},
     {"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},{"key":"Permissions-Policy","value":"camera=(), microphone=(), display-capture=(), geolocation=()"}]}
   ]
 }

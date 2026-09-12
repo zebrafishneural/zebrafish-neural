@@ -8,6 +8,7 @@ node_modules/
 coverage/
 runtime/data/
 runtime/logs/
+experiments/chess/data/
 .vercel/
 
 .vercel

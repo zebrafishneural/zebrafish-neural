@@ -9,3 +9,4 @@ runtime/logs
 *.log
 experiments/learning-live/data
 experiments/learning-demo/data
+experiments/chess/data
