@@ -2,19 +2,25 @@
 
 ## Chess release — 12 September 2026
 
-The new `https://zebraneural.com/chess/` view uses an independent chess process on the operator's computer. This release does not change the AWS feed (`feed.zebraneural.com`) or persistent learner (`learning.zebraneural.com`). Earlier browser-tunnel setup notes below describe the original deployment and are not the current AWS cutover instructions.
+The chess backend now runs independently on AWS Windows, using source pinned to `7ddcfde`. Its public read-only endpoints are `https://chess-feed.zebraneural.com` and `wss://chess-feed.zebraneural.com/ws`. The connection for the Vercel frontend at `https://zebraneural.com/chess/` is configured in `dist/chess/chess-config.json`. The existing AWS feed (`feed.zebraneural.com`) and persistent learner (`learning.zebraneural.com`) are preserved; model equations, training behavior and chess methods are unchanged.
 
-`npm run chess` starts the game on loopback port 4196. `npm run chess:relay` starts its read-only relay on loopback port 4396. Start each command in a separate terminal. The active local preview currently runs from the separate `outputs/zebra-shared-chess-demo` directory; do not start another game against a different data directory if you intend to preserve that match. Copy validated data with the original process stopped before moving ownership to this checkout.
+The application is at `C:/ZebrafishNeuralChess/app`, with persistent state at `C:/ZebrafishNeuralChess/data`. The `ZebraChessService` account runs one headless game owner and one read-only relay. The owner listens privately on loopback port 4196 and the relay on loopback port 4396. Inspect the installed service-account tasks before restarting either process; do not start another `npm run chess` against the same data directory.
+
+The validated transfer contained 685 files, including 668 decisions and 15 game archives. Its final active position was game 16, `chess-000016-ef4b806e`, at ply 33. The AWS owner advanced after import. The personal-computer owner is retired, and its data remains frozen as a backup. That computer's power and internet connection no longer affect the live backend.
 
 The relay accepts only game state, saved game/decision records and read-only WebSocket snapshots. It shares one upstream connection, sends up to five public visual samples per second plus immediate position/status changes, and supports up to 128 simultaneous spectators with compression and bounded buffering. This is a configured ceiling, not a claim of load-tested capacity. Full decision traces remain available through the record endpoint. No desktop, browser feed, shell or project-file route is exposed through the chess relay.
 
-The temporary public bridge is a Cloudflare Quick Tunnel to `http://127.0.0.1:4396` with `--http-host-header 127.0.0.1:4396`. Its HTTPS/WSS URL is configured in `dist/chess/chess-config.json`; a restarted Quick Tunnel can have a different URL, requiring that file and the frontend to be redeployed. Keep the computer awake and the game, relay and tunnel processes running. A stable named tunnel or server migration is the next operational improvement.
+The stable public hostname routes to the private read-only relay. Configure its HTTPS/WSS endpoints in `dist/chess/chess-config.json`, deploy the frontend and verify advancing positions before declaring the frontend cutover complete.
 
-The game saves to its own ignored `data/` directory. Restart recovers committed moves and recomputes an unfinished decision using its recorded seed. Do not copy or replace the Wikipedia/learning data directories for a chess update. `npm run test:chess` checks chess, storage, recovery and relay behavior. The local standalone package has the same tests available with `npm test`.
+Restart recovers committed moves and recomputes an unfinished decision using its recorded seed. Do not copy or replace the Wikipedia/learning data directories for a chess update. To roll back ownership, stop the AWS owner and transfer and validate its latest state before starting a replacement owner. Resuming the frozen personal-computer backup after AWS has advanced would fork the game history. `npm run test:chess` checks chess, storage, recovery and relay behavior. The local standalone package has the same tests available with `npm test`.
 
 `node scripts/build-chess.mjs` copies only the chess frontend into `dist/chess` and retains its existing connection configuration. The build never copies runtime data. The public homepage contains both a top-navigation link and a third experiment link beside Wikipedia and Target test.
 
-The public frontend is https://zebraneural.com, hosted on Vercel. Its live feed comes from an isolated Chromium process on this computer through an HTTPS tunnel. Closing a viewer does not stop that process. The computer must stay awake and online.
+## Historical original Wikipedia hosting notes
+
+The model-process and Quick Tunnel instructions below document the original personal-computer deployment. They are retained for reference and do not describe the current AWS feed, persistent learner or chess backend. Their computer uptime and tunnel restart requirements no longer apply to the live AWS services.
+
+The original public frontend was https://zebraneural.com, hosted on Vercel. Its live feed came from an isolated Chromium process on the operator's computer through an HTTPS tunnel. Closing a viewer did not stop that process; the original host needed to stay awake and online.
 
 ## Model process
 

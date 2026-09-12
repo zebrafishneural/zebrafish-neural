@@ -1,6 +1,6 @@
 # Watch the Fish Play Chess
 
-Open [the chess experiment](../dist/chess/). One server owns the game; all spectators see the same committed position. The process runs on the operator's computer for this release. Closing a spectator tab does not stop it. If that computer or its connection goes offline, the page reports the interruption and retains its last received state.
+Open [the chess experiment](../dist/chess/). One server owns the game; all spectators see the same committed position. The process runs independently on AWS Windows. Closing a spectator tab does not stop it. If the backend or its connection goes offline, the page reports the interruption and retains its last received state.
 
 ## Players and outcomes
 
