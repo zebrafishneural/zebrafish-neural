@@ -4,6 +4,26 @@ Each visitor gets a private chess game against the zebrafish-inspired controller
 
 This is a view of a computational decision process. The activity display is not a measurement of an animal's thoughts, a language-model explanation, or a reconstructed whole zebrafish brain. The chess adapter maps engineered position features into the rate model and scores legal candidates; see [chess methods](chess.md) and [model equations](model.md). This release does not train the model from human games or change the target learner's saved gains.
 
+## Reproduce a fish decision
+
+After a fish move is committed, select it and click **Replay & verify**. The browser runs a separate worker using the published selector and chess rules. It reconstructs all legal moves and their four input features, reruns every pair in both orientations, checks motor integrals and seeded tie-breaks, and compares all stored activity samples, timings and pair identities. The chosen UCI/SAN move and resulting FEN must match too. This verifies the complete recorded calculation rather than just reproducing the same final move.
+
+The page binds the selected record to the displayed game's ID, ply, reconstructed FEN, committed move and deterministic decision seed. For committed ply `p`, that seed is `(game.seed ^ Math.imul(p + 1, 0x9e3779b1)) >>> 0`. These checks prevent attaching an unrelated decision to the current game; they do not authenticate the server's account of that game.
+
+The original selector, model and chess-rule sources are unchanged from commit [`36effb98570f2562d0e7a0ac443828477cf63ae2`](https://github.com/zebrafishneural/zebrafish-neural/tree/36effb98570f2562d0e7a0ac443828477cf63ae2/experiments/chess). The build checks their pinned source hashes. The page exposes the source-file manifest, model and selector versions, six frozen gains, gains hash, record fingerprint and a downloadable verification report. Its separate verifier source link identifies the verifier release used for independent checks.
+
+Floating-point replay fields use an absolute tolerance of `1e-12`; version identifiers and the original frozen gains must match exactly. Complete field sets and array lengths are checked. Missing, reordered or additional samples and unknown extension fields fail verification. `PlayRuntime` omits the synthetic retina from stored samples, so the verifier reconstructs it but compares every field that is actually stored. A position with only one legal move is reported as a forced move with no neural comparison and zero model samples.
+
+For a check outside the website, download the selected move's **Decision JSON** and obtain a separate checkout of the verifier revision linked on the page. With Node.js 22 or later, run this from the repository root:
+
+```sh
+node experiments/chess-play/verification/cli.mjs /path/to/decision.json
+```
+
+No package installation, account, API key or running game service is required for this command. It accepts the raw export or an explicit `{schemaVersion: 1, sha256, payload}` storage wrapper, verifies any wrapper hash, and rejects files larger than 8 MiB. Replay is bounded to 6,000 samples. The JSON result has status `verified`, `mismatch` or `invalid`; exit code `0` means verified and `1` means failure. Mismatch details are capped at 20 entries.
+
+A successful replay establishes numerical consistency with the public computation. It is not server or hardware attestation, and it does not prove an animal brain or a particular executable produced the record. SHA-256 hashes are content fingerprints, not signatures. A standalone decision file supplies its own position and seed; without the game context it cannot authenticate the game assignment or the seed's provenance. Checking the public source in a separate environment avoids relying solely on the website's own verification display.
+
 ## Hosting boundary
 
 | Component | Location | Role |

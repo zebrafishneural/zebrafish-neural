@@ -2,6 +2,7 @@ import {PlayBoard} from './board.js';
 import {BrainView} from '/chess/lib/brain-view.js';
 import {REGIONS} from '/chess/lib/model.js';
 import {Chess} from '/chess/lib/chess.js';
+import {clearVerification,setVerificationDecision,decisionContext} from './verification-panel.js';
 
 const $=id=>document.getElementById(id);
 const SESSION_KEY='zebrafish.play.session.v1';
@@ -110,6 +111,7 @@ function renderMoves(game){
   const nearBottom=$('moves').scrollHeight-$('moves').scrollTop-$('moves').clientHeight<55;$('moves').replaceChildren(...contents);if(nearBottom)$('moves').scrollTop=$('moves').scrollHeight;
 }
 function resetDisplay(){
+  clearVerification();
   lastSample=null;autoInspectedPly=0;decisionRecord=null;decisionKey='';decisionRequest++;positionKey='';movesKey='';brain.setRates(Array(8).fill(0));brain.select(-1);
   rows.forEach(row=>{row.value.textContent='—';row.fill.style.width='0%';row.row.classList.remove('selected');});fish?.setState({rates:Array(8).fill(0),drive:0,turn:0,time:0,paused:true});
   $('decision-content').hidden=true;$('decision-tag').textContent='WAITING FOR A FISH MOVE';$('decision-summary').textContent='After the fish replies, its recorded candidate features and comparison results appear here.';$('moves').replaceChildren(element('p','Your moves and the fish’s replies will appear here.','empty-state'));$('move-count').textContent='0 PLIES';$('fish-heading').textContent='Meet your opponent';$('fish-side-note').textContent='The same controller as the live chess experiment.';$('fish-side-chip').textContent='F';$('fish-side-chip').removeAttribute('data-side');$('side-label').textContent='Choose a side to begin.';$('game-id').textContent='NO GAME STARTED';$('last-move').textContent='Standard starting position';$('turn-title').textContent='Your move starts the experiment.';$('turn-detail').textContent='Select a color above.';$('turn-banner').removeAttribute('data-phase');$('model-time').textContent='—';holdSample();controls();
@@ -139,13 +141,14 @@ async function mutate(suffix,body){
 }
 async function inspect(move){
   if(!session)return;const requestNumber=++decisionRequest;decisionKey=`${session.gameId}/${move.ply}`;decisionRecord=null;
+  clearVerification();const inspectedGame=state?.game;
   for(const button of document.querySelectorAll('.move-button'))button.setAttribute('aria-pressed',String(Number(button.dataset.ply)===move.ply));
   $('decision-content').hidden=true;$('decision-tag').textContent=`${Math.ceil(move.ply/2)}${move.ply%2?'.':'…'} ${move.san} · ${move.actor==='fish'?'FISH':'YOU'}`;
   if(move.actor!=='fish'){$('decision-summary').textContent='You played this move. Select a fish reply to inspect the controller’s recorded comparisons.';return;}
   $('decision-summary').textContent='Loading the saved decision from your game.';
   try{const record=await request(path(`/moves/${move.ply}`));if(requestNumber!==decisionRequest)return;const decision=record.decision||record;
     if(!Array.isArray(decision.candidates)||!Array.isArray(decision.comparisons)||typeof decision.selectedUci!=='string'||decision.candidates.some(candidate=>!Array.isArray(candidate.features)||candidate.features.length!==4||candidate.features.some(x=>!Number.isFinite(x)))||decision.comparisons.some(pair=>!Number.isFinite(pair.margin)))throw Error('Invalid decision record.');
-    decisionRecord=record;const name=uci=>decision.candidates.find(candidate=>candidate.uci===uci)?.san||uci;
+    decisionRecord=record;setVerificationDecision(record,decisionContext(inspectedGame,move));const name=uci=>decision.candidates.find(candidate=>candidate.uci===uci)?.san||uci;
     const finalPair=decision.comparisons.at(-1);
     $('decision-summary').textContent=finalPair?(finalPair.tieBreak?`The final pair tied within the declared motor tolerance. The saved seeded tie-break selected ${decision.selectedSan}.`:`The final comparison selected ${decision.selectedSan} over ${name(finalPair.winnerUci===finalPair.leftUci?finalPair.rightUci:finalPair.leftUci)}. Its combined motor margin was ${signed(finalPair.margin)}.`):`${decision.selectedSan} was the only legal move available.`;
     $('decision-selected').textContent=`${decision.selectedSan} (${decision.selectedUci})`;$('decision-candidates').textContent=String(decision.candidates.length);$('decision-duration').textContent=`${num(decision.modelDuration,2)} model s`;

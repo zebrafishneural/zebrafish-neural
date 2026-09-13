@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "modelRevision": "36effb98570f2562d0e7a0ac443828477cf63ae2",
+  "verificationRevision": "e1ad3096118a261e2c269f0c1ad9db9e92147934",
+  "files": [
+    {
+      "path": "experiments/chess/lib/selector.mjs",
+      "sha256": "a080c3a002f9aa74a033a790382ab0091fe89f3d62045faade3c103b4efd2e78"
+    },
+    {
+      "path": "experiments/chess/public/lib/model.js",
+      "sha256": "0be9606aedf305ddf053b57efbefdbafb244537edd5b035e7039bde73083e3bd"
+    },
+    {
+      "path": "experiments/chess/public/lib/chess.js",
+      "sha256": "76c7c34f0e2e9ab076521a5d6fe786a9cce537bb1b6f29d32a9c9970b5b232d2"
+    },
+    {
+      "path": "experiments/chess/public/lib/chess-LICENSE.txt",
+      "sha256": "0b3a3c2b4432a26bb18f9d06f5bba4de015bcc980306b7db28b06025495e2186"
+    },
+    {
+      "path": "experiments/chess-play/verification/verify.mjs",
+      "sha256": "5e0aa4a1881a4e7b52096037a58164ac93b15bb619e0cc751e7bde4b23ddd2d7"
+    }
+  ],
+  "bundleHash": "7d72f269e6fd966e1c7a8759b69313ba1f95dbb581172216883ca8192b2f02b5"
+}

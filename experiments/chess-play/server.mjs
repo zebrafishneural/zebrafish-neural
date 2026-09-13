@@ -9,7 +9,7 @@ import {createPlayStore, PlayError, ID} from './lib/store.mjs';
 import {PlayRuntime} from './lib/runtime.mjs';
 
 const previewRoot = resolve(import.meta.dirname, '../../dist');
-const types = {'.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2'};
+const types = {'.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2'};
 const loopback = address => ['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(address);
 const tokenFor = req => /^Bearer ([a-f0-9]{64})$/.exec(req.headers.authorization || '')?.[1];
 const fail = (status, code, message) => { throw new PlayError(status, code, message); };
