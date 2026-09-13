@@ -10,6 +10,9 @@
     "check": "node scripts/check.mjs",
     "docs": "node scripts/build-docs.mjs",
     "test:chess": "node --test experiments/chess/tests/*.test.mjs",
+    "test:chess-play": "node --test experiments/chess-play/tests/*.test.mjs",
+    "build:chess-play": "node scripts/build-chess-play.mjs",
+    "chess:play": "node experiments/chess-play/server.mjs",
     "chess": "node experiments/chess/server.mjs",
     "chess:relay": "node experiments/chess/relay.mjs",
     "runtime": "node runtime/server.mjs"

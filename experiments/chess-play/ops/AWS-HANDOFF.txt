@@ -1,0 +1,57 @@
+Install the new You vs the Fish service on the existing AWS Windows server.
+This is a separate service, not a migration or replacement of shared chess.
+
+Keep these unchanged: C:\ZebrafishNeural, C:\ZebrafishNeuralChess, Wikipedia,
+learning, challenge, shared autonomous chess, their tasks/data, and Vercel.
+Do not reboot AWS for this installation. Do not stop any existing project task.
+
+Use the reviewed release commit supplied with this handoff, not an unpinned
+moving branch. Record the exact commit and verify an archive hash if provided.
+Install the complete repository at C:\ZebrafishNeuralPlay\app so shared chess
+imports resolve, with new state at C:\ZebrafishNeuralPlay\data. No data needs to
+be transferred from the shared autonomous game or learner. Reuse Node >=22 and
+run npm.cmd ci, backend tests, and ops/supervisor.test.mjs on isolated data.
+
+Read docs/chess-play.md and inspect the three ops scripts before running them.
+Create a dedicated non-administrator local ZebraPlayService credential through
+Get-Credential. Run prepare-windows.ps1 with that credential. Inspect effective
+ACLs and the resulting task. Preparation must leave task ZebrafishNeuralPlay
+disabled and ops\production.enabled absent, with no listener on 4200. The account
+can write only its own data/log/runtime paths; code and configuration are read-only.
+Do not place credentials in chat, a script, environment variable, or report.
+
+DNS: play-feed.zebraneural.com A 16.192.97.162. If this record is missing, report
+the single needed DNS change; do not alter existing records. Reuse the actual
+existing supervised Caddy installation and certificate storage. Back up its
+configuration and append only Caddyfile.play.template's new host block. Validate
+the complete candidate and reload Caddy once; do not replace existing blocks.
+Preserve Origin/Authorization. Overwrite X-Forwarded-For with the real peer IP;
+PLAY_TRUST_PROXY=loopback requires Caddy directly on the same host. No wildcard
+CORS. No raw port, Caddy admin, project file, desktop or browser-control exposure.
+
+Confirm DNS from public and server resolvers, trusted TLS, allowed-path 502 while
+the service is disabled, rejected project/config/data paths, and private 4200.
+Audit AWS inbound rules if authenticated read access exists; otherwise explicitly
+report them unverified. Public 80/443 belong to existing Caddy. Do not open 4200.
+Check Wikipedia frames, learner health and shared chess advancement before/after
+the reload. If any preservation check fails, revert the new Caddy change only.
+
+After code, isolated tests, task setup and edge checks pass, run activation with
+activate-windows.ps1 -Action Start. It enables only the new service. Confirm one
+play-service Node process, private listener, health, and bounded logs. Run external
+verify-public.mjs from another host (it creates two disposable private games).
+Verify bearer/WS authentication, denied origins, session isolation, a human move,
+fish response and committed trace, retry deduplication, private PGN, and WSS
+reconnect. Test new-service crash recovery and RDP disconnection without disturbing
+other project tasks. A real reboot remains NOT PERFORMED until a separately planned
+maintenance opportunity; do not claim the startup trigger proves a reboot test.
+
+Return either READY FOR FRONTEND CONFIGURATION or the exact blockers. Include
+commit/hash, actual test counts, task/account/listener evidence, data/log paths,
+DNS/TLS/HTTPS/WSS/auth checks, current-service preservation, and what was not tested.
+Public endpoints to report if verified:
+  https://play-feed.zebraneural.com
+  wss://play-feed.zebraneural.com/play-ws
+
+Do not change Vercel in this server handoff. The frontend is released separately
+at https://zebraneural.com/play/ after these endpoints pass verification.

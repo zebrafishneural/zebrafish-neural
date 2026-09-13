@@ -9,6 +9,8 @@ coverage/
 runtime/data/
 runtime/logs/
 experiments/chess/data/
+experiments/chess-play/data/
+experiments/chess-play/logs/
 .vercel/
 
 .vercel

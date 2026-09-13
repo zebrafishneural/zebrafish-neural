@@ -1,0 +1,42 @@
+# APPEND this new site block to the existing Caddy configuration.
+# Do not replace any existing host/global block or install a second Caddy.
+# Validate the complete candidate, then reload the existing Caddy once.
+play-feed.zebraneural.com {
+    @playHealth {
+        method GET HEAD
+        path /healthz
+    }
+    @playApi {
+        method GET HEAD POST OPTIONS
+        path /api/play/*
+    }
+    @playStream {
+        method GET
+        path /play-ws
+    }
+    handle @playHealth {
+        reverse_proxy 127.0.0.1:4200 {
+            header_up Host 127.0.0.1:4200
+            header_up X-Forwarded-For {remote_host}
+        }
+    }
+    handle @playApi {
+        reverse_proxy 127.0.0.1:4200 {
+            header_up Host 127.0.0.1:4200
+            header_up X-Forwarded-For {remote_host}
+        }
+    }
+    handle @playStream {
+        reverse_proxy 127.0.0.1:4200 {
+            header_up Host 127.0.0.1:4200
+            header_up X-Forwarded-For {remote_host}
+            stream_close_delay 5m
+        }
+    }
+    handle {
+        respond "Not found" 404
+    }
+}
+# Preserve Origin and Authorization. Never add wildcard CORS or a trusted Origin.
+# PLAY_TRUST_PROXY=loopback is safe only with this direct, same-host proxy setup.
+# Do not enable access logging of Authorization headers or WebSocket messages.

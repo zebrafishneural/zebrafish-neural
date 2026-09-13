@@ -4,9 +4,19 @@ Open [the chess experiment](../dist/chess/). One server owns the game; all spect
 
 ## Players and outcomes
 
-The fish alternates between White and Black across games. The page identifies its color and last move beside the existing 3D fish model. Its opponent is an automatic, seeded bot that samples legal moves with a preference for captures, checks and promotions. No human plays either side in this release.
+The fish alternates between White and Black across games. The page identifies its color and last move beside the existing 3D fish model. Its opponent is an automatic, seeded bot that samples legal moves with a preference for captures, checks and promotions. The shared broadcast runs both sides automatically; human games use the separate player service described below.
 
 New games use new seeds and cycle through four disclosed starting prefixes: the normal starting position, `d4 d5`, `e4 e5`, and `Nf3 d5`. Prefix moves are labeled Opening; they are not attributed to the controller. Wins and losses follow actual checkmate. Draws include stalemate, insufficient material, repetition, the fifty-move rule and a disclosed 160-half-move limit. No result is predetermined.
+
+## Play against the fish
+
+The separate [You vs the Fish page](../dist/play/) adds human player sessions alongside the shared broadcast. Choose White, Black or a random side. Each session starts from the normal chess position. The server validates human moves and computes the fish's replies using the exact same frozen selector described below. Individual games do not change the shared broadcast.
+
+The panel beside your board streams actual comparison samples from your session: the candidate pair, feature being presented, eight population rates and integrated Motor L minus Motor R. The readable decision summary is derived from the saved final comparison, including seeded tie-breaks. The page does not generate a hidden chain of thought or a language-model explanation.
+
+Games and decision records are stored on the server with a private access key kept in this browser. Refreshing the page resumes the session. No account or wallet is required. The default retention period is 24 hours from game creation; download the PGN and decision JSON before expiry if you want to keep them. Each session has a disclosed 160-half-move cap. A bounded compute queue keeps simultaneous matches from running unlimited work.
+
+The service's [source and hosting instructions](https://github.com/zebrafishneural/zebrafish-neural/tree/main/experiments/chess-play) include session isolation, mutation idempotency, restart recovery and recorded-selector agreement tests. Deployment status is reported by the game page's connection indicator.
 
 ## Board to neural input
 
