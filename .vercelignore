@@ -10,3 +10,4 @@ runtime/logs
 experiments/learning-live/data
 experiments/learning-demo/data
 experiments/chess/data
+experiments/chess-play/data
