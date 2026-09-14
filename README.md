@@ -61,7 +61,7 @@ For local-only use, set `dist/live-config.json` to `{"endpoint":"http://127.0.0.
 
 The runtime opens a fresh browser context. It does not capture your desktop or use personal tabs, files, accounts, or a wallet. Viewers cannot start, stop, or command the shared model. The host must remain awake and online. Closing the website does not stop the shared process.
 
-The homepage opens Wikipedia by default. Select Target test or open `/#target-test` for the independent local experiment. Target controls affect only that browser's simulation. It pauses when hidden or when Wikipedia is selected, while the shared host continues. Target records stay in memory until exported; reset, reload or closing the page discards them. See the [target-test methods](docs/target-test.md) for protocols, input mapping, scoring and retention.
+The homepage currently opens the shared AWS chess game by default. Its board, fish body, neural activity and move records reuse the full `/chess/` observer. Select Wikipedia or open `/#live-browser` for the shared browser run; select Target test or open `/#target-test` for the independent local experiment. Target controls affect only that browser's simulation. It pauses when hidden or when another experiment is selected, while the shared hosts continue. Target records stay in memory until exported; reset, reload or closing the page discards them. See the [target-test methods](docs/target-test.md) for protocols, input mapping, scoring and retention.
 
 On Windows, `./runtime/local-host.ps1 -Action Start` starts the supervised model in the background; use `-Action Status` to inspect it and `-Action Stop` to stop it. See [operator notes](OPERATIONS.md) for the public feed and restart procedure.
 

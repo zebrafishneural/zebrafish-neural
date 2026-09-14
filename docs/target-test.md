@@ -4,7 +4,7 @@
 
 The Target test puts the existing eight-state controller in a small, measurable visual task. A target produces synthetic retinal input; the population model generates steering and forward movement; the task records whether the cursor reaches the target. The model equations and coefficients are unchanged. There is no learning between attempts.
 
-Open [Target test](https://zebraneural.com/#target-test) directly, or select Target test beside Wikipedia on the homepage. The homepage opens the shared Wikipedia run by default. Each visitor's target experiment runs separately in that visitor's browser. It does not send commands to the shared Wikipedia controller.
+Open [Target test](https://zebraneural.com/#target-test) directly, or select Target test beside Wikipedia and Chess on the homepage. The homepage currently opens the shared AWS chess game by default. Each visitor's target experiment runs separately in that visitor's browser. It does not send commands to the shared Wikipedia or chess controllers.
 
 ## Two input adapters, one population model
 

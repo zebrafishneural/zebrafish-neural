@@ -1,0 +1,9 @@
+/* The shared chess page is reused here; its own transport owns the connection. */
+.live-heading[hidden],.live-metrics[hidden],.live-grid[hidden],.live-footnote[hidden],#chess-home[hidden]{display:none}
+.home-experiments{padding:0 0 17px;margin-bottom:23px;border-top:0;border-bottom:1px solid var(--line);gap:8px}
+.home-experiments button,.home-experiments .chess-link{min-height:36px;padding:7px 13px;color:var(--text);border-color:var(--line);font-size:.8125rem}
+.home-experiments button[aria-pressed=true]{color:var(--accent);border-color:var(--accent);background:#e9f0ec}
+.home-experiments .chess-link:hover{color:var(--accent);border-color:var(--accent)}
+#home-chess{display:block;width:100%;height:2400px;border:0;background:var(--paper)}
+.chess-home-link{display:block;margin:14px 0 24px;text-align:right;font-size:.875rem;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:740px){#home-chess{height:3900px}}

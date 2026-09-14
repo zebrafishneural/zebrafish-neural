@@ -1,0 +1,3 @@
+.home-embed .topbar,.home-embed .skip-link,.home-embed footer{display:none}
+.home-embed body{min-height:0}
+.home-embed main{max-width:none;width:100%;margin:0;padding:0 0 2px}

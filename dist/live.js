@@ -107,6 +107,19 @@ const feed=new SharedFeed({onData:renderWiki,onStatus:status=>{
 }});
 function switchMode(next){
   feed.stop();mode=next;accumulator=0;lastFrame=performance.now();eventKey='';
+  const chess=next==='chess',chessFrame=$('home-chess');
+  document.body.dataset.experiment=next;
+  $('mode-chess').setAttribute('aria-pressed',String(chess));
+  for(const selector of ['.live-heading','.live-metrics','.live-grid','.live-footnote'])document.querySelector(selector).hidden=chess;
+  $('chess-home').hidden=!chess;
+  const skip=document.querySelector('.skip-link');skip.href=chess?'#chess-home':'#live-browser';skip.textContent=chess?'Skip to the shared chess game':'Skip to the experiment';
+  if(chess){
+    $('mode-target').setAttribute('aria-pressed','false');$('mode-wikipedia').setAttribute('aria-pressed','false');
+    $('trial-records').hidden=true;
+    if(!chessFrame.hasAttribute('src'))chessFrame.src='./chess/?embed=home';
+    return;
+  }
+  chessFrame.removeAttribute('src');
   const target=next==='target';
   $('mode-target').setAttribute('aria-pressed',String(target));$('mode-wikipedia').setAttribute('aria-pressed',String(!target));
   for(const id of ['target-controls','task-results','trial-records'])if($(id))$(id).hidden=!target;
@@ -122,6 +135,7 @@ function switchMode(next){
   else{setEmpty('Connecting to the shared run','Loading the current Wikipedia frame.');$('download-run').disabled=true;modelView(new Array(8).fill(0),new Array(512).fill(0));latestWiki=null;connection('Connecting','Read-only Wikipedia observer');feed.start();}
 }
 function change(){accumulator=0;holdUntil=0;paintTarget();}
+$('mode-chess').addEventListener('click',()=>{history.replaceState(null,'','#chess');switchMode('chess');});
 $('mode-target').addEventListener('click',()=>{history.replaceState(null,'','#target-test');switchMode('target');});
 $('mode-wikipedia').addEventListener('click',()=>{history.replaceState(null,'','#live-browser');switchMode('wikipedia');});
 $('protocol').addEventListener('change',e=>{session.next(e.target.value);change();});
@@ -156,5 +170,10 @@ function frame(now){
 }
 window.addEventListener('pagehide',()=>feed.stop());
 window.addEventListener('pageshow',event=>{if(event.persisted&&mode==='wikipedia')feed.start();});
-window.addEventListener('hashchange',()=>{if(location.hash==='#target-test')switchMode('target');else if(location.hash==='#live-browser')switchMode('wikipedia');});
-switchMode(location.hash==='#target-test'?'target':'wikipedia');requestAnimationFrame(frame);
+window.addEventListener('message',event=>{
+  if(event.origin!==location.origin||event.source!==$('home-chess').contentWindow||event.data?.type!=='zebrafish-chess-height')return;
+  const height=event.data.height;
+  if(Number.isFinite(height)&&height>0&&height<=20000)$('home-chess').style.height=`${Math.ceil(height)}px`;
+});
+window.addEventListener('hashchange',()=>{if(location.hash==='#target-test')switchMode('target');else if(location.hash==='#live-browser')switchMode('wikipedia');else if(location.hash==='#chess'||!location.hash)switchMode('chess');});
+switchMode(location.hash==='#target-test'?'target':location.hash==='#live-browser'?'wikipedia':'chess');requestAnimationFrame(frame);
